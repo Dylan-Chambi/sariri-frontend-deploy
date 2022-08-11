@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue","Poppins", sans-serif;
+    
+}
+
+::-webkit-scrollbar {
+  width: 0.6rem;
+  background-color: #14213d;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #4539e6;
+}
+
+.SignIn {
+  background-image: url("./assets/bolivia2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  image-rendering: pixelated;
+  padding-top: 3%;
+  text-align: center;
+}
+
+.SignUp {
+  background-image: url("./assets/bolivia2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  padding-top: 5%;
+  image-rendering: pixelated;
+  text-align: center;
+}
+.react-tel-input .form-control {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  height: 3.5rem !important;
+  position: relative;
+  letter-spacing: .01rem;
+  border-radius: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  width: 100% !important;
+  font-size: 0.9rem !important;
+}
