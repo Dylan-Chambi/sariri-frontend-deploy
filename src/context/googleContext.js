@@ -6,12 +6,12 @@ export const GoogleContext = createContext()
 
 const GoogleContextProvider = (props) => {
     const [ user, setUser ] = useState({})
-    const [ flag, setFlag ] = useState(false)
+    const [ showLogin, setShowLogin ] = useState(true)
 
     const handleSignOut = (event) => {
         setUser({})
         showButton()
-        setFlag(false)
+        setShowLogin(true)
     }
 
     const showButton = () => {
@@ -27,7 +27,7 @@ const GoogleContextProvider = (props) => {
         var userObject = jwt_decode(response.credential)
         console.log("Este es el userObject: "+userObject.name)
         setUser(userObject)
-        setFlag(true)
+        setShowLogin(false)
         hideButton()
     }
 
@@ -39,6 +39,7 @@ const GoogleContextProvider = (props) => {
                 callback: handleCallbackResponse
             })
 
+
             google.accounts.id.renderButton(
                 document.getElementById('signInDiv'),
                 { theme: 'outline', size: 'large'}
@@ -49,7 +50,7 @@ const GoogleContextProvider = (props) => {
     }, [])
 
     return (
-        <GoogleContext.Provider value={{flag, user}}>
+        <GoogleContext.Provider value={{flag: showLogin, user}}>
             {props.children}
         </GoogleContext.Provider>
     )

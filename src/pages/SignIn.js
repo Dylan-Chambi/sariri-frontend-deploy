@@ -24,7 +24,7 @@ function Copyright(props) {
 
 const theme = createTheme({});
 
-export default function SignIn() 
+export default function SignIn() {
 
   const {user} = useContext(GoogleContext)
   
@@ -83,15 +83,11 @@ export default function SignIn()
             Ingresar
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <Button
-                color="primary"
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Boton Google
-            </Button>
+              <div  color="primary"
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }} id='signInDiv'></div>
             <MuiPhoneNumber defaultCountry={'us'} onChange={(value)=>{handlePhoneNumberChange(value)}} value={phoneNumber}
             margin="normal"
             required
@@ -103,7 +99,7 @@ export default function SignIn()
             />
             
             <Button
-            href="/home" 
+            // href="/home"
             underline="none"
             color= "primary"
               type="submit"
@@ -111,8 +107,20 @@ export default function SignIn()
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             onClick={() => postUser(phoneNumber)}>
-              Skip   
+              Conectar
             </Button>
+
+              <Button
+                  href="/home"
+                  underline="none"
+                  color= "primary"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() => postUser(phoneNumber)}>
+                  Skip
+              </Button>
            
           </Box>
         </Box>
