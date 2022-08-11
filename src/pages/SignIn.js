@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useContext} from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import MuiPhoneNumber from 'material-ui-phone-number';
 import HouseIcon from '@mui/icons-material/House';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import {GoogleContext} from "../context/googleContext";
 
 function Copyright(props) {
   return (
@@ -23,8 +24,13 @@ function Copyright(props) {
 
 const theme = createTheme({});
 
-export default function SignIn() {
-    const [phoneNumber, setPhoneNumber] = React.useState('');
+export default function SignIn() 
+
+  const {user} = useContext(GoogleContext)
+  
+  
+  const [phoneNumber, setPhoneNumber] = React.useState('');
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -35,6 +41,21 @@ export default function SignIn() {
    
  const handlePhoneNumberChange = (value) => {
     setPhoneNumber(value);
+    }
+ 
+ const postUser = async (n)=> {
+        console.log("El usuario "+user.given_name+" "+user.family_name+" con celu "+n+" y correo "+user.email+" va a ingresar")
+        try {
+            const response = await api.post('/register', {
+                user_name: user.given_name,
+                user_lastname: user.family_name,
+                user_phone: n,
+                user_email: user.email
+            })
+            console.log(response.data)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
 
@@ -89,7 +110,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-            >
+            onClick={() => postUser(phoneNumber)}>
               Skip   
             </Button>
            
