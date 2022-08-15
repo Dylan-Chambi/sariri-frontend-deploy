@@ -9,6 +9,7 @@ import MuiPhoneNumber from 'material-ui-phone-number';
 import HouseIcon from '@mui/icons-material/House';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import {GoogleContext} from "../context/googleContext";
+import axios from "axios";
 
 function Copyright(props) {
   return (
@@ -46,7 +47,7 @@ export default function SignIn() {
  const postUser = async (n)=> {
         console.log("El usuario "+user.given_name+" "+user.family_name+" con celu "+n+" y correo "+user.email+" va a ingresar")
         try {
-            const response = await api.post('/register', {
+            const response = await axios.post('/register', {
                 user_name: user.given_name,
                 user_lastname: user.family_name,
                 user_phone: n,
@@ -79,15 +80,16 @@ export default function SignIn() {
           <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <HouseIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" marginBottom={3}>
             Ingresar
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
               <div  color="primary"
                     type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }} id='signInDiv'></div>
+                    align="center"
+                    fullWidth={true}
+                    variant="contained"  
+                    sx={{ mt: 10, mb: 6 }} id='signInDiv'></div>
             <MuiPhoneNumber defaultCountry={'us'} onChange={(value)=>{handlePhoneNumberChange(value)}} value={phoneNumber}
             margin="normal"
             required
