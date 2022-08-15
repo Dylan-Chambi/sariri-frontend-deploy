@@ -27,7 +27,7 @@ export default function Navbar() {
             <a href="#home">Inicio</a>
           </li>
           <li>
-            <a href="#services">Hoteles</a>
+            <a href="#profile">Hoteles</a>
           </li>
           <li>
             <a href="#recommend">Mapa</a>
