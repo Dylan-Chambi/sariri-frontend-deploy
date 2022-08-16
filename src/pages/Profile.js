@@ -16,6 +16,7 @@ import ScrollToTop from '../components/ScrollToTop';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Navbar from '../components/Navbar';
 import imagen from '../assets/bolivia2.jpg';
+import { useRef, useState } from 'react';
 
 
 function Copyright(props) {
@@ -29,9 +30,17 @@ function Copyright(props) {
     );
 }
 
+
+
 const theme = createTheme();
 
 export default function Profile() {
+    const [readOnly, setReadOnly] = useState(true);
+
+    const handleEditButtonChange = () => {
+        setReadOnly(!readOnly);
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -90,18 +99,10 @@ export default function Profile() {
                                 >
                                     <div>
                                         <TextField
-                                            required
-                                            id="outlined-required"
-                                            label="Nombre"
-                                            defaultValue="Luke"
-
-                                        />
-                                        <TextField
                                             id="outlined-read-only-input"
-                                            label="Read Only"
                                             defaultValue="Luke"
                                             InputProps={{
-                                                readOnly: true,
+                                                readOnly: readOnly,
                                             }}
                                         />
                                     </div>
@@ -120,20 +121,14 @@ export default function Profile() {
                                     autoComplete="off"
                                 >
                                     <div>
-                                        <TextField
-                                            required
-                                            id="outlined-required"
-                                            label="Apellido"
-                                            defaultValue="Morrow"
 
-                                        />
                                         <TextField
                                             id="outlined-read-only-input"
-                                            label="Read Only"
                                             defaultValue="Morrow"
                                             InputProps={{
-                                                readOnly: true,
+                                                readOnly: readOnly,
                                             }}
+
                                         />
                                     </div>
                                 </Box>
@@ -151,40 +146,37 @@ export default function Profile() {
                                     autoComplete="off"
                                 >
                                     <div>
-                                        <TextField
-                                            required
-                                            id="outlined-required"
-                                            label="Telefono"
-                                            defaultValue="6556678"
 
-                                        />
                                         <TextField
                                             id="outlined-read-only-input"
-                                            label="Read Only"
                                             defaultValue="6556678"
                                             InputProps={{
-                                                readOnly: true,
+                                                readOnly: readOnly,
                                             }}
+                                        //disabled={readOnly}
                                         />
                                     </div>
                                 </Box>
                             </Box>
                             <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                EDITAR
-              </Button>
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ width: 230, mt: 3, mb: 2 }}
+                                onClick={handleEditButtonChange}
+
+                            >
+                                EDITAR
+                            </Button>
                             <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                ACTUALIZAR INFORMACION
-              </Button>
+                                href="/home"
+                                type="submit"
+
+                                variant="contained"
+                                sx={{ width: 230, mt: 3, mb: 2 }}
+                            >
+                                ACTUALIZAR INFORMACION
+                            </Button>
                         </Box>
                     </Grid>
                 </Grid>
