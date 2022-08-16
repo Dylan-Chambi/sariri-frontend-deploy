@@ -34,18 +34,24 @@ const GoogleContextProvider = (props) => {
     useEffect( () => {
 
             /*global google*/
-            google.accounts.id.initialize({
+        
+            async function fetchGoogle() {
+
+            window.google.accounts.id.initialize({
                 client_id: "299217830835-j9tjr805mhe6nrlrk51s1f9ptqscc1bf.apps.googleusercontent.com",
                 callback: handleCallbackResponse
             })
 
 
-            google.accounts.id.renderButton(
+            window.google.accounts.id.renderButton(
                 document.getElementById('signInDiv'),
-                { theme: 'outline', size: 'large'}
+                { size: 'large', shape: 'rectangular', theme: 'filled_blue', text: 'signin'}
             )
 
-            google.accounts.id.prompt()
+            window.google.accounts.id.prompt()
+        }
+
+        fetchGoogle()
 
     }, [])
 
