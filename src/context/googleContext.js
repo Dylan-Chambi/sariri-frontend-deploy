@@ -4,6 +4,18 @@ import jwt_decode from 'jwt-decode'
 
 export const GoogleContext = createContext()
 
+// Se carga el script de google como promesa para que la variable "google" se cargue antes de usarla
+const loadScript = (src) =>
+    new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${src}"]`)) return resolve()
+        const script = document.createElement('script')
+        script.src = src
+        script.onload = () => resolve()
+        script.onerror = (err) => reject(err)
+        document.body.appendChild(script)
+    })
+
+
 const GoogleContextProvider = (props) => {
     const [ user, setUser ] = useState({})
     const [ showLogin, setShowLogin ] = useState(true)
@@ -32,21 +44,34 @@ const GoogleContextProvider = (props) => {
     }
 
     useEffect( () => {
+        const googleSrc = 'https://accounts.google.com/gsi/client'
 
+        loadScript(googleSrc).then(() => {
             /*global google*/
             google.accounts.id.initialize({
                 client_id: "299217830835-j9tjr805mhe6nrlrk51s1f9ptqscc1bf.apps.googleusercontent.com",
                 callback: handleCallbackResponse
             })
 
-
-            google.accounts.id.renderButton(
-                document.getElementById('signInDiv'),
+            const signInDiv = document.getElementById('signInDiv')
+            
+            if (signInDiv) {
+                google.accounts.id.renderButton(
+                    signInDiv,
                 { theme: 'outline', size: 'large'}
             )
 
-            google.accounts.id.prompt()
+                google.accounts.id.prompt()
+            }
 
+        }).catch((err) => {
+            console.log("Error loading google script: " + err)
+        });
+
+        return () => {
+            const scriptTag = document.querySelector(`script[src="${googleSrc}"]`)
+            if (scriptTag) scriptTag.remove()
+        }
     }, [])
 
     return (

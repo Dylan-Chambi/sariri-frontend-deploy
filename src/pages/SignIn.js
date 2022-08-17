@@ -87,7 +87,6 @@ export default function SignIn() {
               <div  color="primary"
                     type="submit"
                     align="center"
-                    fullWidth={true}
                     variant="contained"  
                     sx={{ mt: 10, mb: 6 }} id='signInDiv'></div>
             <MuiPhoneNumber defaultCountry={'us'} onChange={(value)=>{handlePhoneNumberChange(value)}} value={phoneNumber}
