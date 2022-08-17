@@ -19,3 +19,10 @@ export const getPlacesData = async () => {
         console.log(e)
     }
 }
+
+export const api = axios.create({
+    baseURL: process.env.REACT_APP_BACK_ENDPOINT,
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
