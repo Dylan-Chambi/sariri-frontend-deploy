@@ -29,11 +29,11 @@ export default function Hero() {
           </div>
           <div className="container">
             <label htmlFor="">Adultos</label>
-            <input type="text" placeholder="0" />
+            <input type="number" min="0" max="48" placeholder="0" />
           </div>
           <div className="container">
             <label htmlFor="">Niños</label>
-            <input type="text" placeholder="0" />
+            <input type="number" min="0" max="48" placeholder="0" />
           </div>
           <button>Buscar</button>
         </div>

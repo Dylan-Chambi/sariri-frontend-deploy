@@ -39,6 +39,7 @@ export default function Profile() {
 
     const handleEditButtonChange = () => {
         setReadOnly(!readOnly);
+        setShow((prevState) => !prevState);
     }
 
     const handleSubmit = (event) => {
@@ -49,9 +50,23 @@ export default function Profile() {
             password: data.get('password'),
         });
     };
+    const [show, setShow] = useState(false);
+    const [errorText, setErrorText] = useState('');
+    const phoneRegex = /^[0-9]+$/;
+    const [disableButton, setDisableButton] = useState(false);
+    
 
-    return (
-        <div><Navbar />
+    const handleError= (event) => {
+        if (event.target.value.match(phoneRegex)) {
+            setErrorText('');
+            setDisableButton(false);
+        }else {
+            setErrorText('Ingrese un numero de telefono valido');
+            setDisableButton(true);
+        }
+    } 
+        return (
+        <div>
             <ThemeProvider theme={theme}>
                 <Grid container component="main" sx={{ height: '100vh' }}>
                     <CssBaseline />
@@ -150,14 +165,19 @@ export default function Profile() {
                                         <TextField
                                             id="outlined-read-only-input"
                                             defaultValue="6556678"
+                                            type="number"
+                                            error={errorText}
+                                            onChange={handleError}
+                                            helperText={errorText}
+
                                             InputProps={{
                                                 readOnly: readOnly,
                                             }}
-                                        //disabled={readOnly}
                                         />
                                     </div>
                                 </Box>
                             </Box>
+                            {!show &&
                             <Button
                                 type="submit"
                                 fullWidth
@@ -167,15 +187,15 @@ export default function Profile() {
 
                             >
                                 EDITAR
-                            </Button>
+                            </Button>}
                             <Button
                                 href="/home"
                                 type="submit"
-
+                                disabled={disableButton}
                                 variant="contained"
                                 sx={{ width: 230, mt: 3, mb: 2 }}
                             >
-                                ACTUALIZAR INFORMACION
+                                GUARDAR
                             </Button>
                         </Box>
                     </Grid>
