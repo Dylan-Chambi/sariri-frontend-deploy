@@ -56,7 +56,7 @@ export default function Profile() {
     };
     const [show, setShow] = useState(false);
     const [errorText, setErrorText] = useState('');
-    const phoneRegex = /^\+?[1-9][0-9]{7,14}$/;
+    const phoneRegex =/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
     const [disableButton, setDisableButton] = useState(false);
 
 
