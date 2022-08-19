@@ -56,7 +56,7 @@ export default function Profile() {
     };
     const [show, setShow] = useState(false);
     const [errorText, setErrorText] = useState('');
-    const phoneRegex = /[0-9]/;
+    const phoneRegex = /^\+?[1-9][0-9]{7,14}$/;
     const [disableButton, setDisableButton] = useState(false);
 
 
@@ -111,7 +111,7 @@ export default function Profile() {
                                     Nombre:
                                 </Typography>
                                 <Box
-                                    component="form"
+                                    
                                     sx={{
                                         '& .MuiTextField-root': { m: 1, width: '25ch' },
                                     }}
@@ -134,7 +134,7 @@ export default function Profile() {
                                     Apellido:
                                 </Typography>
                                 <Box
-                                    component="form"
+                                    
                                     sx={{
                                         '& .MuiTextField-root': { m: 1, width: '25ch' },
                                     }}
@@ -161,7 +161,7 @@ export default function Profile() {
                                     Telefono:
                                 </Typography>
                                 <Box
-                                    component="form"
+                                   
                                     sx={{
                                         '& .MuiTextField-root': { m: 1, width: '25ch' },
                                     }}
@@ -169,26 +169,13 @@ export default function Profile() {
                                     autoComplete="off"
                                 >
                                     <div>
-                                        <MuiPhoneNumber defaultCountry={'bo'} onChange={(value) => { handlePhoneNumberChange(value) }}
-                                            value="+5916556678"
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            
-                                            id="phone"
-                                            
-                                            name="phone"
-                                            autoFocus
-                                            InputProps={{
-                                                readOnly: readOnly,
-                                            }}
-                                        />
-                                        <TextField
-
+                                   
+                                        
+                                            <TextField
                                             id="outlined-read-only-input"
-                                            defaultValue="6556678"
-                                            type="number"
-                                            error={errorText}
+                                            defaultValue="+5916556678"
+                                            type="phone"
+                                            
                                             onChange={handleError}
                                             helperText={errorText}
 
