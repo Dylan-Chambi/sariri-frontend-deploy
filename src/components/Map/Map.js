@@ -11,6 +11,7 @@ const Map = ({ coords, places, setCoords, setBounds, setChildClicked}) => {
     const matches = useMediaQuery('(min-width:600px)');
     const classes = useStyles();
 
+
     return (
         <div className={classes.mapContainer}>
             <GoogleMapReact
@@ -26,28 +27,25 @@ const Map = ({ coords, places, setCoords, setBounds, setChildClicked}) => {
                 }}
                 onChildClick={(child) => setChildClicked(child)}
             >
-                {/*{places.length && places.map((place, i) => (*/}
-                {/*    <div*/}
-                {/*        className={classes.markerContainer}*/}
-                {/*        lat={Number(place.latitude)}*/}
-                {/*        lng={Number(place.longitude)}*/}
-                {/*        key={i}*/}
-                {/*    >*/}
-                {/*        {!matches*/}
-                {/*            ? <LocationOnOutlinedIcon color="primary" fontSize="large" />*/}
-                {/*            : (*/}
-                {/*                <Paper elevation={3} className={classes.paper}>*/}
-                {/*                    <Typography className={classes.typography} variant="subtitle2" gutterBottom> {place.name}</Typography>*/}
-                {/*                    <img*/}
-                {/*                        className={classes.pointer}*/}
-                {/*                        src={place.photo ? place.photo.images.large.url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}*/}
-                {/*                    />*/}
-                {/*                    <Rating name="read-only" size="small" value={Number(place.rating)} readOnly />*/}
-                {/*                    <h3>{place.price}</h3>*/}
-                {/*                </Paper>*/}
-                {/*            )}*/}
-                {/*    </div>*/}
-                {/*))}*/}
+                {places.length && places.map((place, i) => (
+                    <div
+                        className={classes.markerContainer}
+                        lat={Number(place.latitude)}
+                        lng={Number(place.longitude)}
+                        key={i}
+                    >
+                        {(!matches)
+                            ? <LocationOnOutlinedIcon color="primary" fontSize="large" />
+                            : place.price ? (
+                                <Paper elevation={5} className={classes.paper}>
+                                    <Typography className={classes.typography} variant="subtitle2" gutterBottom>
+                                        {(place.price).length < 7 ? (place.price): (place.price).length == 7 ? (place.price).substring(3,(place.price).length) : (place.price).length == 8 ? (place.price).substring(4,(place.price).length)
+                                            : (place.price).length == 9 ? (place.price).substring(5,(place.price).length): (place.price).length == 10 ?  (place.price).substring(6,(place.price).length) : (place.price).substring(7,(place.price).length)}
+                                    </Typography>
+                                </Paper>
+                            ) : <div/>}
+                    </div>
+                ))}
             </GoogleMapReact>
         </div>
     );
