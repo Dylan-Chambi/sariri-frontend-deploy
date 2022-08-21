@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
+import Profile from '../pages/Profile'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
 export default function Navbar() {
@@ -33,7 +34,7 @@ export default function Navbar() {
             <a href="#map">Mapa</a>
           </li>
           <li>
-            <a href="/profile">Perfil</a>
+            <a href="/profile" element={<Profile/>}>Perfil</a>
           </li>
         </ul>
         <button>Registrarse</button>

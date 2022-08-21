@@ -10,6 +10,7 @@ import {Grid} from '@material-ui/core'
 import Map from '../components/Map/Map';
 import {useContext} from "react";
 import {GoogleContext} from "../context/googleContext";
+import Hotels from "../components/Hotels";
  function Home() {
 
      const {flag, user} = useContext(GoogleContext)
@@ -77,11 +78,11 @@ import {GoogleContext} from "../context/googleContext";
      };
 
      const showHotelsInConsole = () => {
-         console.log("Start showing")
-         console.log("-------------------------------------")
-         places?.map((place, i) => (console.log(place)))
-         console.log("-------------------------------------")
-         console.log("Done showing")
+         // console.log("Start showing")
+         // console.log("-------------------------------------")
+         // places?.map((place, i) => (console.log(place)))
+         // console.log("-------------------------------------")
+         // console.log("Done showing")
      }
 
 
@@ -96,7 +97,8 @@ import {GoogleContext} from "../context/googleContext";
     sr.reveal(
       `
         nav,
-        #hero,
+        #home,
+        #map,
         footer
         `,
       {
@@ -112,15 +114,9 @@ import {GoogleContext} from "../context/googleContext";
       <ScrollToTop />
         <Navbar />
         <Principal onPlaceChanged={onPlaceChanged} onLoad={onLoad} showHotels={showHotelsInConsole()}/>
-            <Grid item xs={12} md={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Map
-                    setChildClicked={setChildClicked}
-                    setBounds={setBounds}
-                    setCoords={setCoords}
-                    coords={coords}
-                    places={filteredPlaces.length ? filteredPlaces : places}
-                />
-            </Grid>
+        <Hotels coords={coords} places={places} filteredPlaces={filteredPlaces}
+                setCoords={setCoords} setBounds={setBounds} setChildClicked={setChildClicked}
+                setPriceRange={setPriceRange} priceRange={priceRange} isLoading={isLoading} childClicked={childClicked}/>
       <Footer />
     </div>
   );

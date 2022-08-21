@@ -17,6 +17,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Navbar from '../components/Navbar';
 import imagen from '../assets/bolivia2.jpg';
 import { useRef, useState } from 'react';
+import MuiPhoneNumber from 'material-ui-phone-number';
 
 
 function Copyright(props) {
@@ -36,11 +37,15 @@ const theme = createTheme();
 
 export default function Profile() {
     const [readOnly, setReadOnly] = useState(true);
+    const [phoneNumber, setPhoneNumber] = React.useState('');
 
     const handleEditButtonChange = () => {
         setReadOnly(!readOnly);
+        setShow((prevState) => !prevState);
     }
-
+    const handlePhoneNumberChange = (value) => {
+        setPhoneNumber(value);
+    }
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -49,7 +54,23 @@ export default function Profile() {
             password: data.get('password'),
         });
     };
+    const [show, setShow] = useState(false);
+    const [errorText, setErrorText] = useState('');
+    const phoneRegex =/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    const [disableButton, setDisableButton] = useState(false);
 
+
+    const handleError = (event) => {
+        const coma = event.target.value.match(phoneRegex);
+        console.log(coma);
+        if (event.target.value.match(phoneRegex)) {
+            setErrorText('');
+            setDisableButton(false);
+        } else {
+            setErrorText('Ingrese un numero de telefono valido');
+            setDisableButton(true);
+        }
+    }
     return (
         <div>
             <ThemeProvider theme={theme}>
@@ -90,7 +111,7 @@ export default function Profile() {
                                     Nombre:
                                 </Typography>
                                 <Box
-                                    component="form"
+
                                     sx={{
                                         '& .MuiTextField-root': { m: 1, width: '25ch' },
                                     }}
@@ -113,7 +134,7 @@ export default function Profile() {
                                     Apellido:
                                 </Typography>
                                 <Box
-                                    component="form"
+
                                     sx={{
                                         '& .MuiTextField-root': { m: 1, width: '25ch' },
                                     }}
@@ -125,6 +146,7 @@ export default function Profile() {
                                         <TextField
                                             id="outlined-read-only-input"
                                             defaultValue="Morrow"
+
                                             InputProps={{
                                                 readOnly: readOnly,
                                             }}
@@ -134,11 +156,12 @@ export default function Profile() {
                                 </Box>
                             </Box>
                             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+
                                 <Typography variant="body1" color="text.secondary" align="left" sx={{ fontWeight: 'bold' }}>
                                     Telefono:
                                 </Typography>
                                 <Box
-                                    component="form"
+
                                     sx={{
                                         '& .MuiTextField-root': { m: 1, width: '25ch' },
                                     }}
@@ -147,35 +170,42 @@ export default function Profile() {
                                 >
                                     <div>
 
+
                                         <TextField
                                             id="outlined-read-only-input"
-                                            defaultValue="6556678"
+                                            defaultValue="+5916556678"
+                                            type="phone"
+
+                                            onChange={handleError}
+                                            helperText={errorText}
+
                                             InputProps={{
                                                 readOnly: readOnly,
                                             }}
-                                        //disabled={readOnly}
                                         />
+
                                     </div>
                                 </Box>
                             </Box>
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ width: 230, mt: 3, mb: 2 }}
-                                onClick={handleEditButtonChange}
+                            {!show &&
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ width: 230, mt: 3, mb: 2 }}
+                                    onClick={handleEditButtonChange}
 
-                            >
-                                EDITAR
-                            </Button>
+                                >
+                                    EDITAR
+                                </Button>}
                             <Button
                                 href="/home"
                                 type="submit"
-
+                                disabled={disableButton}
                                 variant="contained"
                                 sx={{ width: 230, mt: 3, mb: 2 }}
                             >
-                                ACTUALIZAR INFORMACION
+                                GUARDAR
                             </Button>
                         </Box>
                     </Grid>

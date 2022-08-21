@@ -10,6 +10,8 @@ import HouseIcon from '@mui/icons-material/House';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import {GoogleContext} from "../context/googleContext";
 import axios from "axios";
+import { api } from "../api";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -28,6 +30,7 @@ const theme = createTheme({});
 export default function SignIn() {
 
   const {user} = useContext(GoogleContext)
+    const navigate = useNavigate();
   
   
   const [phoneNumber, setPhoneNumber] = React.useState('');
@@ -43,20 +46,24 @@ export default function SignIn() {
  const handlePhoneNumberChange = (value) => {
     setPhoneNumber(value);
     }
- 
- const postUser = async (n)=> {
-        console.log("El usuario "+user.given_name+" "+user.family_name+" con celu "+n+" y correo "+user.email+" va a ingresar")
-        try {
-            const response = await axios.post('/register', {
-                user_name: user.given_name,
-                user_lastname: user.family_name,
-                user_phone: n,
-                user_email: user.email
-            })
-            console.log(response.data)
-        } catch (err) {
+
+    const postUser = async (number) => {
+        console.log("El usuario " + user.given_name + " " + user.family_name + " con celu " + number + " y correo " + user.email + " va a ingresar")
+        await api.post('/user', {
+            user_id: user.sub,
+            user_name: user.given_name,
+            user_lastName: user.family_name,
+            user_phone: number,
+            user_email: user.email
+        }).then(res => {
+            if (res.status === 201) {
+                console.log("Usuario registrado: " + user.email)
+                navigate("/home")
+            }
+        }).catch(err => {
+            alert("No se pudo registrar el usuario")
             console.log(err)
-        }
+        });
     }
 
 
@@ -101,7 +108,6 @@ export default function SignIn() {
             />
             
             <Button
-            // href="/home"
             underline="none"
             color= "primary"
               type="submit"
@@ -119,8 +125,7 @@ export default function SignIn() {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={() => postUser(phoneNumber)}>
+                  sx={{ mt: 3, mb: 2 }}>
                   Skip
               </Button>
            

@@ -5,7 +5,7 @@ import { Autocomplete } from '@react-google-maps/api';
 export default function Hero({onPlaceChanged, onLoad, showHotels}) {
 
   return (
-    <Section id="hero">
+    <Section id="home">
       <div className="background">
         <img src={homeImage} alt="" />
       </div>
