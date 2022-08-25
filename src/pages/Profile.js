@@ -16,9 +16,12 @@ import ScrollToTop from '../components/ScrollToTop';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Navbar from '../components/Navbar';
 import imagen from '../assets/bolivia2.jpg';
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext } from 'react';
 import MuiPhoneNumber from 'material-ui-phone-number';
-
+import { GoogleContext } from "../context/googleContext";
+import { useEffect } from 'react';
+import { api } from '../api';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
     return (
@@ -36,33 +39,45 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Profile() {
+    const { userSariri, setUserSariri } = useContext(GoogleContext)
+    const navigate = useNavigate();
     const [readOnly, setReadOnly] = useState(true);
-    const [phoneNumber, setPhoneNumber] = React.useState('');
+    const [newPhoneNumber, setNewPhoneNumber] = useState(userSariri.user_phone);
+    const [newUserName, setNewUserName] = useState(userSariri.user_name);
+    const [newUserLastName, setNewUserLastName] = useState(userSariri.user_lastName);
 
     const handleEditButtonChange = () => {
         setReadOnly(!readOnly);
         setShow((prevState) => !prevState);
     }
-    const handlePhoneNumberChange = (value) => {
-        setPhoneNumber(value);
-    }
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+
     const [show, setShow] = useState(false);
     const [errorText, setErrorText] = useState('');
-    const phoneRegex =/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
     const [disableButton, setDisableButton] = useState(false);
 
 
+    const handleUpdateUser = async (event) => {
+        event.preventDefault();
+        await api.patch('/user/'+ userSariri.user_id, {
+            user_name: newUserName,
+            user_lastName: newUserLastName,
+            user_phone: newPhoneNumber
+        }).then(async (response) => {
+            alert(response.data)
+            if(response.status === 200){
+                const uploadDB = await api.get('/user/' + userSariri.user_id);
+                setUserSariri(uploadDB.data[0])
+            }
+        }).catch((err) => {
+            alert(err)
+        })
+        navigate('/home')
+    }
+
     const handleError = (event) => {
         const coma = event.target.value.match(phoneRegex);
-        console.log(coma);
+        setNewPhoneNumber(event.target.value)
         if (event.target.value.match(phoneRegex)) {
             setErrorText('');
             setDisableButton(false);
@@ -99,6 +114,7 @@ export default function Profile() {
                                 flexDirection: 'column',
                                 alignItems: 'center',
                             }}
+                            component="form" noValidate onSubmit={handleUpdateUser}
                         >
                             <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                                 <AccountCircleIcon />
@@ -106,90 +122,81 @@ export default function Profile() {
                             <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold' }}>
                                 Perfil
                             </Typography>
-                            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                            <Box sx={{ mt: 1 }}>
                                 <Typography variant="body1" color="text.secondary" align="left" sx={{ fontWeight: 'bold' }}>
                                     Nombre:
                                 </Typography>
                                 <Box
-                                    
+
                                     sx={{
                                         '& .MuiTextField-root': { m: 1, width: '25ch' },
                                     }}
                                     noValidate
                                     autoComplete="off"
                                 >
-                                    <div>
-                                        <TextField
-                                            id="outlined-read-only-input"
-                                            defaultValue="Luke"
-                                            InputProps={{
-                                                readOnly: readOnly,
-                                            }}
-                                        />
-                                    </div>
+                                    <TextField
+                                        id="outlined-read-only-input"
+                                        value={newUserName}
+                                        InputProps={{
+                                            readOnly: readOnly,
+                                        }}
+                                        onChange={(e) => setNewUserName(e.target.value)}
+                                    />
                                 </Box>
                             </Box>
-                            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                            <Box sx={{ mt: 1 }}>
                                 <Typography variant="body1" color="text.secondary" align="left" sx={{ fontWeight: 'bold' }}>
                                     Apellido:
                                 </Typography>
                                 <Box
-                                    
+
                                     sx={{
                                         '& .MuiTextField-root': { m: 1, width: '25ch' },
                                     }}
                                     noValidate
                                     autoComplete="off"
                                 >
-                                    <div>
+                                    <TextField
+                                        id="outlined-read-only-input"
+                                        value={newUserLastName}
 
-                                        <TextField
-                                            id="outlined-read-only-input"
-                                            defaultValue="Morrow"
+                                        InputProps={{
+                                            readOnly: readOnly,
+                                        }}
+                                        onChange={(e) => setNewUserLastName(e.target.value)}
 
-                                            InputProps={{
-                                                readOnly: readOnly,
-                                            }}
-
-                                        />
-                                    </div>
+                                    />
                                 </Box>
                             </Box>
-                            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                            <Box sx={{ mt: 1 }}>
 
                                 <Typography variant="body1" color="text.secondary" align="left" sx={{ fontWeight: 'bold' }}>
                                     Telefono:
                                 </Typography>
                                 <Box
-                                   
+
                                     sx={{
                                         '& .MuiTextField-root': { m: 1, width: '25ch' },
                                     }}
                                     noValidate
                                     autoComplete="off"
                                 >
-                                    <div>
-                                   
-                                        
-                                            <TextField
-                                            id="outlined-read-only-input"
-                                            defaultValue="+5916556678"
-                                            type="phone"
-                                            
-                                            onChange={handleError}
-                                            helperText={errorText}
+                                    <TextField
+                                        id="outlined-read-only-input"
+                                        value={newPhoneNumber}
+                                        type="phone"
 
-                                            InputProps={{
-                                                readOnly: readOnly,
-                                            }}
-                                        />
+                                        onChange={handleError}
+                                        helperText={errorText}
 
-                                    </div>
+                                        InputProps={{
+                                            readOnly: readOnly,
+                                        }}
+                                    />
                                 </Box>
                             </Box>
                             {!show &&
                                 <Button
-                                    type="submit"
                                     fullWidth
                                     variant="contained"
                                     sx={{ width: 230, mt: 3, mb: 2 }}
@@ -199,7 +206,6 @@ export default function Profile() {
                                     EDITAR
                                 </Button>}
                             <Button
-                                href="/home"
                                 type="submit"
                                 disabled={disableButton}
                                 variant="contained"

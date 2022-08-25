@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Avatar, Button, Typography } from "@mui/material";
+import { GoogleContext } from "../context/googleContext";
+import axios from "axios";
+import { Box } from "@mui/system";
+import { deepOrange, deepPurple } from '@mui/material/colors';
 export default function Navbar() {
   const [navbarState, setNavbarState] = useState(false);
+  const { flag, userSariri, userGoogle } = useContext(GoogleContext);
+
   return (
     <>
       <Nav>
@@ -24,19 +32,26 @@ export default function Navbar() {
 
         <ul>
           <li>
-            <a href="#home">Inicio</a>
+            <Link to="/home">Inicio</Link>
           </li>
           <li>
-            <a href="#hotels">Hoteles</a>
+            <Link to="/hotels">Hoteles</Link>
           </li>
           <li>
-            <a href="#map">Mapa</a>
+            <Link to="/map">Mapa</Link>
           </li>
           <li>
-            <a href="/profile">Perfil</a>
+            <Link to="/profile" >Perfil</Link>
           </li>
         </ul>
-        <button>Registrarse</button>
+        {!flag ? 
+        <Box sx={{ display: 'flex', alignItems:"center", justifyContent:"center", m: 2 }}>
+        <Typography>{userSariri.user_name + " " + userSariri.user_lastName}</Typography>
+        <Avatar alt={userSariri.user_name + " " + userSariri.user_lastName} sx={{ml: 1.5, bgcolor: '#023e8a'}}>
+          {userSariri.user_name[0]}
+        </Avatar>
+        </Box>
+        : <Button>Registrarse</Button>}
       </Nav>
     </>
   );

@@ -47,11 +47,9 @@ const GoogleContextProvider = (props) => {
         const checkDB = await api.get('/user-exist/' + userObject.sub);
 
         const userHasAccount = checkDB.data.userExists;
-        console.log(checkDB.data);
         if(userHasAccount){
             const userData = await api.get('/user/' + userObject.sub);
             setUserSariri(userData.data[0])
-            console.log(userSariri)
             navigate('/home')
         }else{
             navigate('/sign-up')
@@ -67,7 +65,7 @@ const GoogleContextProvider = (props) => {
         loadScript(googleSrc).then(() => {
             /*global google*/
             google.accounts.id.initialize({
-                client_id: "299217830835-j9tjr805mhe6nrlrk51s1f9ptqscc1bf.apps.googleusercontent.com",
+                client_id: "154712406455-1f9hr3obijb96tobdrej0sidpjm913nq.apps.googleusercontent.com",
                 callback: handleCallbackResponse
             })
 
@@ -93,7 +91,7 @@ const GoogleContextProvider = (props) => {
     }, [])
 
     return (
-        <GoogleContext.Provider value={{flag: showLogin, userGoogle, hasAccount, userSariri}}>
+        <GoogleContext.Provider value={{flag: showLogin, userGoogle, hasAccount, userSariri, setUserSariri}}>
             {props.children}
         </GoogleContext.Provider>
     )

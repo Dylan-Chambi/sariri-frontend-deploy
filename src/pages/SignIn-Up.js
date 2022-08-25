@@ -30,39 +30,29 @@ export default function SignIn({ signIn }) {
 
   const navigate = useNavigate();
 
-  const { user } = useContext(GoogleContext)
+  const { userGoogle, setUserSariri } = useContext(GoogleContext)
 
 
   const [phoneNumber, setPhoneNumber] = React.useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      phone: phoneNumber
-    });
-  }
-
-  const handlePhoneNumberChange = (value) => {
-    setPhoneNumber(value);
-  }
 
   const postUser = async (n) => {
-    console.log("El usuario " + user.given_name + " " + user.family_name + " con celu " + n + " y correo " + user.email + " va a ingresar")
+    console.log("hola")
     await api.post('/user', {
-      user_id: user.sub,
-      user_name: user.given_name,
-      user_lastName: user.family_name,
+      user_id: userGoogle.sub,
+      user_name: userGoogle.given_name,
+      user_lastName: userGoogle.family_name,
       user_phone: n,
-      user_email: user.email
-    }).then(res => {
+      user_email: userGoogle.email
+    }).then(async res => {
+      console.log(res);
       if (res.status === 201) {
-        console.log("Usuario registrado: " + user.email)
+        const saririDBUser = await api.get('/user/' + userGoogle.sub);
+        setUserSariri(saririDBUser.data[0])
         navigate("/home")
       }
     }).catch(err => {
       alert("No se pudo registrar el usuario")
-      console.log(err)
     });
   }
 
@@ -90,13 +80,13 @@ export default function SignIn({ signIn }) {
           <Typography component="h1" variant="h5" marginBottom={3}>
             Ingresar
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" noValidate sx={{ mt: 1 }}>
             <div color="primary"
               type="submit"
               align="center"
               variant="contained"
               sx={{ mt: 10, mb: 6 }} id='signInDiv'></div>
-            {!signIn && <><MuiPhoneNumber defaultCountry={'us'} onChange={(value) => { handlePhoneNumberChange(value) }} value={phoneNumber}
+            {!signIn && <><MuiPhoneNumber defaultCountry={'us'} onChange={(value) => { setPhoneNumber(value) }} value={phoneNumber}
               margin="normal"
               required
               fullWidth
@@ -109,7 +99,6 @@ export default function SignIn({ signIn }) {
               <Button
                 underline="none"
                 color="primary"
-                type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}

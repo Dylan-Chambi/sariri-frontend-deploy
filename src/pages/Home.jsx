@@ -10,7 +10,7 @@ import {useContext} from "react";
 import {GoogleContext} from "../context/googleContext";
  function Home() {
     const [places, setPlaces] = useState([])
-     const {flag, userSariri} = useContext(GoogleContext)
+    const {flag, userSariri} = useContext(GoogleContext)
 
     useEffect(() => {
         getPlacesData().then((data) => {console.log(data); setPlaces(data)})
@@ -38,7 +38,6 @@ import {GoogleContext} from "../context/googleContext";
   }, []);
   return (
     <div>
-        {!flag && <div>Bienvenido {userSariri.user_name}</div>}
       <ScrollToTop />
       <Navbar />
       <Principal />
