@@ -27,13 +27,13 @@ export default function Navbar() {
             <a href="#home">Inicio</a>
           </li>
           <li>
-            <a href="#services">Hoteles</a>
+            <a href="#hotels">Hoteles</a>
           </li>
           <li>
-            <a href="#recommend">Mapa</a>
+            <a href="#map">Mapa</a>
           </li>
           <li>
-            <a href="#testimonials">Perfil</a>
+            <a href="/profile">Perfil</a>
           </li>
         </ul>
         <button>Registrarse</button>
