@@ -1,6 +1,8 @@
 
 import React, { createContext, useState, useEffect} from 'react'
 import jwt_decode from 'jwt-decode'
+import { useNavigate } from "react-router-dom";
+import { api } from '../api'
 
 export const GoogleContext = createContext()
 
@@ -17,11 +19,14 @@ const loadScript = (src) =>
 
 
 const GoogleContextProvider = (props) => {
-    const [ user, setUser ] = useState({})
+    const [ userGoogle, setUserGoogle ] = useState({})
+    const [ userSariri, setUserSariri ] = useState({})
     const [ showLogin, setShowLogin ] = useState(true)
+    const [ hasAccount, setHasAccount ] = useState(false)
+    const navigate = useNavigate();
 
     const handleSignOut = (event) => {
-        setUser({})
+        setUserGoogle({})
         showButton()
         setShowLogin(true)
     }
@@ -34,11 +39,24 @@ const GoogleContextProvider = (props) => {
     }
 
 
-    const handleCallbackResponse = (response) => {
-        console.log('Encoded JWT ID Token: '+ response.credential)
+    const handleCallbackResponse = async (response) => {
+        //console.log('Encoded JWT ID Token: '+ response.credential)
         var userObject = jwt_decode(response.credential)
-        console.log("Este es el userObject: "+userObject.name)
-        setUser(userObject)
+        //console.log(userObject)
+        setUserGoogle(userObject)
+        const checkDB = await api.get('/user-exist/' + userObject.sub);
+
+        const userHasAccount = checkDB.data.userExists;
+        console.log(checkDB.data);
+        if(userHasAccount){
+            const userData = await api.get('/user/' + userObject.sub);
+            setUserSariri(userData.data[0])
+            console.log(userSariri)
+            navigate('/home')
+        }else{
+            navigate('/sign-up')
+        }
+        setHasAccount(userHasAccount)
         setShowLogin(false)
         hideButton()
     }
@@ -75,7 +93,7 @@ const GoogleContextProvider = (props) => {
     }, [])
 
     return (
-        <GoogleContext.Provider value={{flag: showLogin, user}}>
+        <GoogleContext.Provider value={{flag: showLogin, userGoogle, hasAccount, userSariri}}>
             {props.children}
         </GoogleContext.Provider>
     )

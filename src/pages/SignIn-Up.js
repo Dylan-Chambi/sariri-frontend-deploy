@@ -16,8 +16,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-        Sariri
-      
+      Sariri
+
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -26,15 +26,15 @@ function Copyright(props) {
 
 const theme = createTheme({});
 
-export default function SignIn() {
+export default function SignIn({ signIn }) {
 
   const navigate = useNavigate();
 
-  const {user} = useContext(GoogleContext)
-  
-  
+  const { user } = useContext(GoogleContext)
+
+
   const [phoneNumber, setPhoneNumber] = React.useState('');
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -42,11 +42,11 @@ export default function SignIn() {
       phone: phoneNumber
     });
   }
-   
- const handlePhoneNumberChange = (value) => {
+
+  const handlePhoneNumberChange = (value) => {
     setPhoneNumber(value);
-    }
- 
+  }
+
   const postUser = async (n) => {
     console.log("El usuario " + user.given_name + " " + user.family_name + " con celu " + n + " y correo " + user.email + " va a ingresar")
     await api.post('/user', {
@@ -69,8 +69,8 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-        
-      <Container component="main" maxWidth="m" sx={{backgroundImage: 'url(../assets/bolivia2.jpg)'}}>
+
+      <Container component="main" maxWidth="m" sx={{ backgroundImage: 'url(../assets/bolivia2.jpg)' }}>
         <CssBaseline />
         <Box
           sx={{
@@ -81,7 +81,7 @@ export default function SignIn() {
             bgcolor: '#fff',
           }}
         >
-            <Typography component="h1" variant="h4" sx={{ mt: 3, mb: 3,fontWeight: 'bold' }}>
+          <Typography component="h1" variant="h4" sx={{ mt: 3, mb: 3, fontWeight: 'bold' }}>
             Tu viaje comienza junto a Sariri!
           </Typography>
           <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
@@ -91,48 +91,48 @@ export default function SignIn() {
             Ingresar
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-              <div  color="primary"
-                    type="submit"
-                    align="center"
-                    variant="contained"  
-                    sx={{ mt: 10, mb: 6 }} id='signInDiv'></div>
-            <MuiPhoneNumber defaultCountry={'us'} onChange={(value)=>{handlePhoneNumberChange(value)}} value={phoneNumber}
-            margin="normal"
-            required
-            fullWidth
-            id="phone"
-            label="Ingrese su numero de telefono"
-            name="phone"
-            autoFocus
+            <div color="primary"
+              type="submit"
+              align="center"
+              variant="contained"
+              sx={{ mt: 10, mb: 6 }} id='signInDiv'></div>
+            {!signIn && <><MuiPhoneNumber defaultCountry={'us'} onChange={(value) => { handlePhoneNumberChange(value) }} value={phoneNumber}
+              margin="normal"
+              required
+              fullWidth
+              id="phone"
+              label="Ingrese su numero de telefono"
+              name="phone"
+              autoFocus
             />
-            
+
+              <Button
+                underline="none"
+                color="primary"
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={() => postUser(phoneNumber)}>
+                Conectar
+              </Button></>}
+
             <Button
-            underline="none"
-            color= "primary"
+              href="/home"
+              underline="none"
+              color="primary"
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            onClick={() => postUser(phoneNumber)}>
-              Conectar
+              sx={{ mt: 3, mb: 2 }}>
+              Skip
             </Button>
 
-              <Button
-                  href="/home"
-                  underline="none"
-                  color= "primary"
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}>
-                  Skip
-              </Button>
-           
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-      
+
     </ThemeProvider>
   );
 }
