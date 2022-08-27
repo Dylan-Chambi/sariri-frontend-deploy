@@ -2,9 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import homeImage from "../assets/illimani.jpg";
 import { Autocomplete } from '@react-google-maps/api';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Select from "../components/Principal/Select";
+import Calendar from "../components/Principal/Calendar";
+import Destination from "../components/Principal/Destination";
+import Button from "../components/Principal/Button";
 export default function Hero({onPlaceChanged, onLoad, showHotels}) {
 
   return (
+    
     <Section id="home">
       <div className="background">
         <img src={homeImage} alt="" />
@@ -20,24 +28,21 @@ export default function Hero({onPlaceChanged, onLoad, showHotels}) {
           <div className="container">
             <label htmlFor="">Cual es tu destino?</label>
             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-              <input type="text" placeholder="Introduce el destino" />
+              <Destination/>
             </Autocomplete>
           </div>
           <div className="container">
-            <label htmlFor="">Check-in</label>
-            <input type="date" />
-          </div>
-          <div className="container">
-            <label htmlFor="">Check-out</label>
-            <input type="date" />
+            <label htmlFor="">Fecha</label>
+            <Calendar/>
           </div>
           <div className="container">
             <label htmlFor="">Adultos</label>
-            <input type="text" placeholder="0" />
+            <Select/>
           </div>
           <div className="container">
             <label htmlFor="">Niños</label>
-            <input type="text" placeholder="0" />
+            <Select/>
+
           </div>
           <button onClick={showHotels}>Buscar</button>
         </div>
@@ -98,7 +103,7 @@ const Section = styled.section`
         flex-direction: column;
         padding: 0 1.5rem;
         label {
-          font-size: 1.1rem;
+          font-size: 1.3rem;
           color: #03045e;
           fontFamily: "Roboto", sans-serif;
         }
@@ -121,23 +126,25 @@ const Section = styled.section`
         }
       }
       button {
-        padding: 1rem;
+        padding: 1.2rem;
+        margin: auto;
         cursor: pointer;
         border-radius: 0.3rem;
         border: none;
         color: white;
         background-color: #4361ee;
         font-size: 1.1rem;
+        font-align: center;
         fontFamily: "Roboto", sans-serif;
         text-transform: uppercase;
-        transition: 0.3s ease-in-out;
+        transition: 0.4s ease-in-out;
         &:hover {
           background-color: #023e8a;
         }
       }
     }
   }
-  @media screen and (min-width: 280px) and (max-width: 980px) {
+  @media screen and (min-width: 180px) and (max-width: 980px) {
     height: 25rem;
     .background {
       background-color: palegreen;

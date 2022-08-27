@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createRef } from 'react';
 import { CircularProgress, Grid, Typography, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import useStyles from './styles.js';
+import Box from '@mui/material/Box';
 
 const List = ({ places, childClicked, isLoading, setPriceRange, priceRange }) => {
   const [elRefs, setElRefs] = useState([]);
@@ -12,6 +13,15 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange }) =>
 
   return (
     <div className={classes.container}>
+      <Box
+        display="flex justify-content-around"
+        color={'white'}
+        backgroundColor={'primary.main'}
+        padding={3}
+        borderRadius={3}
+        
+
+      >
       <Typography variant="h4">Encuentra tu hotel</Typography>
       <h5>Explicación de precios</h5>
       <h6>$ = Precios hasta 110 </h6>
@@ -35,7 +45,9 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange }) =>
             </Select>
           </FormControl>
         </>
+        
       )}
+      </Box>
     </div>
   );
 };

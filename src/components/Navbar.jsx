@@ -32,7 +32,7 @@ export default function Navbar() {
 
         <ul>
           <li>
-            <a href="#home">Inicio</a>
+            <a href="/home">Inicio</a>
           </li>
           <li>
             <a href="#hotels">Hoteles</a>
