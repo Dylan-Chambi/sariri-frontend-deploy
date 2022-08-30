@@ -26,12 +26,12 @@ export default function AlertDialogSlide() {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}
-      sx= {{
-        color: '#fff',
-        borderColor: '#fff',
-      }}
+        sx={{
+          color: '#fff',
+          borderColor: '#fff',
+        }}
       >
-        <InfoIcon/>
+        <InfoIcon />
       </Button>
       <Dialog
         open={open}
@@ -45,6 +45,7 @@ export default function AlertDialogSlide() {
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description" align='center'>
             <h5>* El rango estimado de precios puede variar dependiendo el pais o region. </h5>
+            <h5>En caso de no encontrarse hoteles de acuerdo al filtro, se mostraran todos los hoteles.</h5>
             <h5>El siguiente desglose es unicamente una referencia aproximada: </h5>
             <h5>$ = ~ 150 </h5>
             <h5>$$ = 150 ~ 300</h5>
