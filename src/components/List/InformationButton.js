@@ -44,10 +44,12 @@ export default function AlertDialogSlide() {
         <DialogTitle>{"Explicación de los rangos de precios"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description" align='center'>
-            <h5>$ = Precios hasta 110 </h5>
-            <h5>$$ = Precios hasta a 200</h5>
-            <h5>$$$ = Precios hasta a 300</h5>
-            <h5>$$$$ = Precios hasta a 400</h5>
+            <h5>* El rango estimado de precios puede variar dependiendo el pais o region. </h5>
+            <h5>El siguiente desglose es unicamente una referencia aproximada: </h5>
+            <h5>$ = ~ 150 </h5>
+            <h5>$$ = 150 ~ 300</h5>
+            <h5>$$$ = 300 ~ 350</h5>
+            <h5>$$$$ = 350 ~ </h5>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
