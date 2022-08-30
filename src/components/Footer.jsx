@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import Profile from "../pages/Profile";
+import { useNavigate } from "react-router-dom";
 export default function Footer() {
   return (
     <FooterContainer>
       <span>Copyright &copy; 2022 Sariri. All rights reserved</span>
       <ul className="links">
         <li>
-          <a href="#hero">Inicio</a>
+          <a href="/home" >Inicio</a>
         </li>
         <li>
           <a href="#services">Hoteles</a>
@@ -15,7 +17,7 @@ export default function Footer() {
           <a href="#recommend">Mapa</a>
         </li>
         <li>
-          <a href="#testimonials">Perfil</a>
+          <a href="/profile" element={<Profile/>}>Perfil</a>
         </li>
       </ul>
     </FooterContainer>
