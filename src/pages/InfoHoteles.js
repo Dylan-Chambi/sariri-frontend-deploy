@@ -12,16 +12,18 @@ import Mapa from '../components/Info-Hotel/Mapa';
 import Stars from '../components/Info-Hotel/Stars';
 import Comment from '../components/Info-Hotel/CommentUser';
 import Others from '../components/Info-Hotel/CommetsOthersUsers';
+import Grid from '@mui/material/Grid';
+
 export default function InfoHoteles() {
     return (
-        <Box>
+        <React.Fragment>
             <Navbar />
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-evenly',
-                marginRight: '5%',
+                
                 marginBottom: '2%',
 
 
@@ -33,8 +35,13 @@ export default function InfoHoteles() {
                     flexDirection: 'row',
                     alignItems: 'flex-end',
                     justifyContent: 'left',
+                    
+                    marginRight: '2%'
                 }}>
-                    <Typography sx={{
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} md={5}>
+                           
+                            <Typography sx={{
                         fontWeight: 'bold',
                         fontSize: '3.5rem',
                         textAlign: 'center',
@@ -48,9 +55,19 @@ export default function InfoHoteles() {
                         fontFamily: 'Roboto',
                     }
                     }>Rio Selva</Typography>
-                    <Contacts />
+                         
+                        </Grid>
+                        <Grid item xs={10} md={5}>
+                           <Contacts />
+                        </Grid>
+                        <Grid item xs={2} md={2}>
+                            <FavButton />
+                        </Grid>
+                    </Grid>
+                    
+                    
                 </Box>
-                <FavButton />
+                
 
 
             </Box>
@@ -108,7 +125,7 @@ export default function InfoHoteles() {
                         SERVICIOS
                     </Typography>
                     <Services />
-                    
+
                 </Box>
                 <Mapa />
 
@@ -124,11 +141,11 @@ export default function InfoHoteles() {
             }}>
                 <Comment />
                 <Others />
-                
-                
-                
-                </Box>
-            
-        </Box>
+
+
+
+            </Box>
+
+        </React.Fragment>
     );
 }
