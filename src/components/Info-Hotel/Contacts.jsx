@@ -10,15 +10,14 @@ import { Typography } from '@mui/material';
 import { margin } from '@mui/system';
 import PlaceIcon from '@mui/icons-material/Place';
 
-export default function contacts() {
+export default function contacts({ location_string, phone_number }) {
   return (
     <Box>
         <Typography sx={{fontSize: 14 , margin: 0}}>
-        <PlaceIcon color='primary'/> Calle Romecin Campos Nro. 696
-Esq. Francisco Bedregal Zona Sopocachi
+        <PlaceIcon color='primary'/> {location_string}
 </Typography>
       <Typography sx={{fontSize: 18 , margin: 0}} >
-      <CallIcon color='primary'/> (591-2) 2412281 - 24115161
+      <CallIcon color='primary'/> {phone_number}
         </Typography>
     </Box>
   );

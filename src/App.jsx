@@ -15,7 +15,7 @@ export default function App() {
             <Route path="/sign-up" element={<SignIn_Up signIn={false}/>} />
             <Route path="/home" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/info-hoteles" element={<InfoHoteles />} />
+            <Route path="/hotels-info/:hotel_id" element={<InfoHoteles />} />
             <Route path="/*"  element={<Navigate replace to="/home" />} />
         </Routes>
     );
