@@ -290,7 +290,7 @@ export default function InfoHoteles() {
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-evenly',
-                    marginRight: '5%',
+                    
                     marginBottom: '2%',
 
 
@@ -302,8 +302,13 @@ export default function InfoHoteles() {
                         flexDirection: 'row',
                         alignItems: 'flex-end',
                         justifyContent: 'left',
-                    }}>
-                        <Typography sx={{
+                        
+                    marginRight: '2%'
+                }}>
+                        <Grid container spacing={2}>
+                        <Grid item xs={12} md={5}>
+                           
+                            <Typography sx={{
                             fontWeight: 'bold',
                             fontSize: '3.5rem',
                             textAlign: 'center',
@@ -317,9 +322,19 @@ export default function InfoHoteles() {
                             fontFamily: 'Roboto',
                         }
                         }>{hotelInfo.name}</Typography>
-                        <Contacts location_string={hotelInfo.location_string} phone_number={hotelInfo.phone} />
-                    </Box>
-                    <FavButton />
+                         
+                        </Grid>
+                        <Grid item xs={10} md={5}>
+                               <Contacts location_string={hotelInfo.location_string} phone_number={hotelInfo.phone} />
+                            </Grid>
+                        <Grid item xs={2} md={2}>
+                                <FavButton />
+                        </Grid>
+                    </Grid>
+                    
+                    
+                </Box>
+                
 
 
                 </Box>

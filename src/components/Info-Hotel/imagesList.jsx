@@ -1,10 +1,14 @@
 import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 export default function StandardImageList() {
+  const theme = useTheme();
+  const matchDownMd = useMediaQuery(theme.breakpoints.down('sm'));
+  
   return (
-    <ImageList sx={{ width: 1400, height: 518, gridAutoFlow: "column",
+    <ImageList sx={{ width: matchDownMd?450:1400, height: 520, gridAutoFlow: "column",
     overflow: "scroll", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
     backgroundColor: 'primary.main',
     gridTemplateColumns: "repeat(auto-fill,minmax(460px,1fr)) !important",
