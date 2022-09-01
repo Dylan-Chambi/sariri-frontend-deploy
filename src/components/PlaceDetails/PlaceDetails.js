@@ -6,9 +6,10 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import Rating from '@material-ui/lab/Rating';
 
 import useStyles from './styles.js';
+import { Link, useNavigate } from 'react-router-dom';
 
 const PlaceDetails = ({ place, selected, refProp }) => {
-
+  const navigate = useNavigate();
   const [pricePerNight, setPricePerNight] = useState("")
 
 
@@ -32,7 +33,9 @@ const PlaceDetails = ({ place, selected, refProp }) => {
         title={place.name}
       />
       <CardContent>
-        <Typography gutterBottom variant="h5">{place.name}</Typography>
+        <Typography gutterBottom variant="h5">
+          <Link to={'/hotels-info/' + place.location_id}>{place.name}</Link>
+          </Typography>
         <Box display="flex" justifyContent="space-between" my={2}>
           <Rating name="read-only" value={Number(place.rating)} readOnly />
           <Typography component="legend">{place.num_reviews} reseña{place.num_reviews > 1 && 's'}</Typography>

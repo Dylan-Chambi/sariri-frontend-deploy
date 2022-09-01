@@ -5,11 +5,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function BasicSelect() {
+export default function BasicSelect({ setNroHuespedes }) {
   const [huesped, setHuesped] = React.useState('');
 
   const handleChange = (event) => {
     setHuesped(event.target.value);
+    setNroHuespedes(event.target.value);
   };
 
   return (
