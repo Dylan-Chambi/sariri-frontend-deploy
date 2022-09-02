@@ -69,12 +69,12 @@ const GoogleContextProvider = (props) => {
             })
 
             const signInDiv = document.getElementById('signInDiv')
-
+            
             if (signInDiv) {
                 google.accounts.id.renderButton(
                     signInDiv,
-                    { size: 'large', shape: 'rectangular', theme: 'filled_blue', text: 'signin'}
-                )
+                { theme: 'outline', size: 'large'}
+            )
 
                 google.accounts.id.prompt()
             }

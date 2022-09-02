@@ -5,31 +5,12 @@ import Footer from "../components/Footer";
 import Principal from "../components/Principal";
 import Navbar from "../components/Navbar";
 import ScrollToTop from "../components/ScrollToTop";
-import scrollReveal from "scrollreveal";
-import { Grid } from "@material-ui/core";
-import Map from "../components/Map/Map";
-import { useContext } from "react";
-import { GoogleContext } from "../context/googleContext";
-import Hotels from "../components/Hotels";
-import ScrollReveal from "./../components/container/ScrollReveal";
-function Home() {
-  const sectionRef = useRef < HTMLElement > null;
-  const { flag, user } = useContext(GoogleContext);
-
-  const [autocomplete, setAutocomplete] = useState(null);
-  const [coords, setCoords] = useState({});
-  const [childClicked, setChildClicked] = useState(null);
-  const [bounds, setBounds] = useState(null);
-  const [filteredPlaces, setFilteredPlaces] = useState([]);
-  const [places, setPlaces] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [type, setType] = useState("hotels");
-  const [rating, setRating] = useState("");
-  const [priceRange, setPriceRange] = useState("");
-
-  // useEffect(() => {
-  //     getPlacesData().then((data) => {console.log(data); setPlaces(data)})
-  // }, [])
+import scrollreveal from "scrollreveal";
+import {useContext} from "react";
+import {GoogleContext} from "../context/googleContext";
+ function Home() {
+    const [places, setPlaces] = useState([])
+    const {flag, userSariri} = useContext(GoogleContext)
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
