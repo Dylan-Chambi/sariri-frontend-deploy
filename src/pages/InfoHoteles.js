@@ -67,7 +67,7 @@ export default function InfoHoteles() {
 
                 <Typography sx={{
                   fontWeight: 'bold',
-                  fontSize: '3.5rem',
+                  fontSize: '2.5rem',
                   textAlign: 'center',
                   marginTop: '1rem',
                   marginLeft: '2rem',
@@ -81,10 +81,10 @@ export default function InfoHoteles() {
                 }>{hotelInfo.name}</Typography>
 
               </Grid>
-              <Grid item xs={10} md={5}>
+              <Grid item xs={10} md={5} alignSelf='self-end'>
                 <Contacts location_string={hotelInfo.location_string} phone_number={hotelInfo.phone} />
               </Grid>
-              <Grid item xs={2} md={2}>
+              <Grid item xs={2} md={2} alignSelf='center'>
                 <FavButton />
               </Grid>
             </Grid>

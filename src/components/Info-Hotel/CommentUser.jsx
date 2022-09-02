@@ -18,7 +18,7 @@ export default function FullWidthTextField() {
             justifyContent: 'space-between',
         }
         }>
-        <Typography variant='h5' fontWeight={'bold'}> Dejanos tu opinion! </Typography>
+        <Typography variant='h5' fontWeight={'bold'}> Dejanos tu opinión! </Typography>
         <Stars />
         </Box>
       <TextField fullWidth id="fullWidth"/>

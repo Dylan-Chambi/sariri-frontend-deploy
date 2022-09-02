@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const rapidApiKey = "2b56e0d118msh360fd25058ad318p12342cjsn859bd34c20dd";
+const rapidApiKey = "e64953e729msh74806b1e11f7700p1687d8jsnf0051a016244";
 
 export const getPlacesData = async (type, sw, ne) => {
     try {
