@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import Profile from '../pages/Profile'
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -59,7 +58,10 @@ export default function Navbar() {
           {userSariri.user_name[0]}
         </Avatar>
         </Box>
-        : <Button>Registrarse</Button>}
+        : <Box>
+          <Button sx={{ mr: 1 }} onClick={() => navigate('/sign-in')} >Login</Button>
+          <Button sx={{ mr: 1 }} onClick={() => navigate('/sign-up')} >Registrarse</Button>
+        </Box>}
       </Nav>
     </>
   );
