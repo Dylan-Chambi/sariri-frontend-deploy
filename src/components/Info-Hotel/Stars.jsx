@@ -22,7 +22,7 @@ export default function CustomizedRating() {
         '& > legend': { mt: 2 },
       }}
     >
-      <Rating name="customized-10" defaultValue={2} max={10} />
+      <Rating name="customized-10" defaultValue={0} max={10} />
     </Box>
   );
 }

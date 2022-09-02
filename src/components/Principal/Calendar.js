@@ -21,6 +21,7 @@ export default function BasicDateRangePicker() {
         value={value}
         onChange={(newValue) => {
           setValue(newValue);
+          console.log(newValue)
         }}
       disablePast
         renderInput={(startProps, endProps) => (
