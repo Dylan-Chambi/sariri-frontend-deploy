@@ -12,10 +12,9 @@ const PlaceDetails = ({ place, selected, refProp }) => {
   const navigate = useNavigate();
   const [pricePerNight, setPricePerNight] = useState("")
 
-
-  const priceSubstring = (place.price).length < 7 ? (place.price) : (place.price).length == 7 ? (place.price).substring(3, (place.price).length) : (place.price).length == 8 ? (place.price).substring(4, (place.price).length)
-    : (place.price).length == 9 ? (place.price).substring(5, (place.price).length) : (place.price).length == 10 ? (place.price).substring(6, (place.price).length) : (place.price).substring(7, (place.price).length)
-
+const priceSubstring = (place.price)?.length < 7 ? (place.price) : (place.price)?.length == 7 ? (place.price).substring(3, (place.price).length) : (place.price)?.length == 8 ? (place.price).substring(4, (place.price).length)
+    : (place.price)?.length == 9 ? (place.price).substring(5, (place.price).length) : (place.price)?.length == 10 ? (place.price).substring(6, (place.price).length) : (place.price)?.substring(7, (place.price).length)
+ 
   useEffect(() => {
     setPricePerNight(priceSubstring)
   }, []);
