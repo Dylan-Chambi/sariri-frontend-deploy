@@ -67,7 +67,7 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange }) =>
         ) : (
           <>
 
-            <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={4}>
               <FormControl fullWidth>
 
                 <Select id="demo-simple-select-label" value={priceRange} onChange={(e) => setPriceRange(e.target.value)}

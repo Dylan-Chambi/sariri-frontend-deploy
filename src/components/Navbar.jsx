@@ -55,7 +55,7 @@ export default function Navbar() {
         <Box sx={{ display: 'flex', alignItems:"center", justifyContent:"center", m: 2 }}>
         <Typography>{userSariri.user_name + " " + userSariri.user_lastName}</Typography>
         <Avatar alt={userSariri.user_name + " " + userSariri.user_lastName} sx={{ml: 1.5, bgcolor: '#023e8a'}}>
-          {userSariri.user_name[0]}
+          {/* {userSariri.user_name[0]} */}
         </Avatar>
         </Box>
         : <Box>

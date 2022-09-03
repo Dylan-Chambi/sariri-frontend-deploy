@@ -11,7 +11,11 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { GoogleContext } from "../context/googleContext";
 import { api } from "../api";
 import { useNavigate } from "react-router-dom";
-import Message from ".././components/global-components/popUpSignIn"
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -35,9 +39,13 @@ export default function SignIn({ signIn }) {
 
     const [phoneNumber, setPhoneNumber] = React.useState('');
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const postUser = async (n) => {
-        console.log("hola")
         await api.post('/user', {
             user_id: userGoogle.sub,
             user_name: userGoogle.given_name,
@@ -52,7 +60,7 @@ export default function SignIn({ signIn }) {
                 navigate("/home")
             }
         }).catch(err => {
-            <Message/>
+            setOpen(true)
         });
     }
 
@@ -82,18 +90,18 @@ export default function SignIn({ signIn }) {
                     </Typography>
                     <Box component="form" noValidate sx={{ mt: 1 }}>
                         <div color="primary"
-                             type="submit"
-                             align="center"
-                             variant="contained"
-                             sx={{ mt: 10, mb: 6 }} id='signInDiv'></div>
+                            type="submit"
+                            align="center"
+                            variant="contained"
+                            sx={{ mt: 10, mb: 6 }} id='signInDiv'></div>
                         {!signIn && <><MuiPhoneNumber defaultCountry={'us'} onChange={(value) => { setPhoneNumber(value) }} value={phoneNumber}
-                                                      margin="normal"
-                                                      required
-                                                      fullWidth
-                                                      id="phone"
-                                                      label="Ingrese su numero de telefono"
-                                                      name="phone"
-                                                      autoFocus
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="phone"
+                            label="Ingrese su numero de telefono"
+                            name="phone"
+                            autoFocus
                         />
 
                             <Button
@@ -122,6 +130,22 @@ export default function SignIn({ signIn }) {
                 <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
 
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"No se pudo registrar el usuario correctamente."}
+                </DialogTitle>
+                <DialogActions>
+                    <Button onClick={handleClose} autoFocus>
+                        OK
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </ThemeProvider>
+
     );
 }

@@ -71,13 +71,7 @@ const priceSubstring = (place.price)?.length < 7 ? (place.price) : (place.price)
           </Typography>
         )}
       </CardContent>
-      <CardActions>
-        <Button size="small" color="primary" onClick={() => window.open(place.web_url, '_blank')}>
-          Trip Advisor
-        </Button>
-        <Button size="small" color="primary" onClick={() => window.open(place.website, '_blank')}>
-          Página Web
-        </Button>
+      <CardActions justifyContent='right'>
         <Button size="small" color="primary" onClick={() => { }}>
           <FavButton/>
         </Button>

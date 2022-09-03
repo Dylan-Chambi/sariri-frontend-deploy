@@ -22,6 +22,13 @@ import { GoogleContext } from "../context/googleContext";
 import { useEffect } from 'react';
 import { api } from '../api';
 import { useNavigate } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 function Copyright(props) {
     return (
@@ -46,6 +53,14 @@ export default function Profile() {
     const [newUserName, setNewUserName] = useState(userSariri.user_name);
     const [newUserLastName, setNewUserLastName] = useState(userSariri.user_lastName);
 
+    const [open, setOpen] = React.useState(false);
+
+    const [message, setMessage] = useState("");
+    const handleClose = () => {
+        setOpen(false);
+        navigate('/home')
+    };
+
     const handleEditButtonChange = () => {
         setReadOnly(!readOnly);
         setShow((prevState) => !prevState);
@@ -56,23 +71,27 @@ export default function Profile() {
     const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
     const [disableButton, setDisableButton] = useState(false);
 
-
     const handleUpdateUser = async (event) => {
         event.preventDefault();
-        await api.patch('/user/'+ userSariri.user_id, {
+        await api.patch('/user/' + userSariri.user_id, {
             user_name: newUserName,
             user_lastName: newUserLastName,
             user_phone: newPhoneNumber
         }).then(async (response) => {
-            alert(response.data)
-            if(response.status === 200){
+
+            if (response.status === 200) {
+                setOpen(true);
+                setMessage("Usuario actualizado correctamente");
                 const uploadDB = await api.get('/user/' + userSariri.user_id);
                 setUserSariri(uploadDB.data[0])
             }
         }).catch((err) => {
-            alert(err)
+            
+            setOpen(true);
+            setMessage("Error al actualizar los datos");
+
         })
-        navigate('/home')
+
     }
 
     const handleError = (event) => {
@@ -86,6 +105,9 @@ export default function Profile() {
             setDisableButton(true);
         }
     }
+
+    
+
     return (
         <div>
             <ThemeProvider theme={theme}>
@@ -210,9 +232,25 @@ export default function Profile() {
                                 disabled={disableButton}
                                 variant="contained"
                                 sx={{ width: 230, mt: 3, mb: 2 }}
+
                             >
                                 GUARDAR
                             </Button>
+                            <Dialog
+                                open={open}
+                                onClose={handleClose}
+                                aria-labelledby="alert-dialog-title"
+                                aria-describedby="alert-dialog-description"
+                            >
+                                <DialogTitle id="alert-dialog-title">
+                                    {message}
+                                </DialogTitle>
+                                <DialogActions>
+                                    <Button onClick={handleClose} autoFocus>
+                                        OK
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
                         </Box>
                     </Grid>
                 </Grid>
