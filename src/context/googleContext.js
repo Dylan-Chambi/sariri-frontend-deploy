@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect} from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 import jwt_decode from 'jwt-decode'
 import { useNavigate } from "react-router-dom";
 import { api } from '../api'
@@ -18,10 +18,10 @@ const loadScript = (src) =>
 
 
 const GoogleContextProvider = (props) => {
-    const [ userGoogle, setUserGoogle ] = useState({})
-    const [ userSariri, setUserSariri ] = useState({})
-    const [ showLogin, setShowLogin ] = useState(true)
-    const [ hasAccount, setHasAccount ] = useState(false)
+    const [userGoogle, setUserGoogle] = useState({})
+    const [userSariri, setUserSariri] = useState({})
+    const [showLogin, setShowLogin] = useState(true)
+    const [hasAccount, setHasAccount] = useState(false)
     const navigate = useNavigate();
 
     const handleSignOut = (event) => {
@@ -43,22 +43,24 @@ const GoogleContextProvider = (props) => {
         var userObject = jwt_decode(response.credential)
         //console.log(userObject)
         setUserGoogle(userObject)
-        const checkDB = await api.get('/user-exist/' + userObject.sub);
-
-        const userHasAccount = checkDB.data.userExists;
-        if(userHasAccount){
-            const userData = await api.get('/user/' + userObject.sub);
-            setUserSariri(userData.data[0])
-            navigate('/home')
-        }else{
-            navigate('/sign-up')
-        }
-        setHasAccount(userHasAccount)
-        setShowLogin(false)
-        hideButton()
+        await api.get('/user-exist/' + userObject.sub).then(async (response) => {
+            const userHasAccount = response.data.userExists;
+            if (userHasAccount) {
+                const userData = await api.get('/user/' + userObject.sub);
+                setUserSariri(userData.data[0])
+                navigate('/home')
+            } else {
+                navigate('/sign-up')
+            }
+            setHasAccount(userHasAccount)
+            setShowLogin(false)
+            hideButton()
+        }).catch(() => {
+            alert("Error checking in database")
+        })
     }
 
-    useEffect( () => {
+    useEffect(() => {
         const googleSrc = 'https://accounts.google.com/gsi/client'
 
         loadScript(googleSrc).then(() => {
@@ -73,7 +75,7 @@ const GoogleContextProvider = (props) => {
             if (signInDiv) {
                 google.accounts.id.renderButton(
                     signInDiv,
-                    { size: 'large', shape: 'rectangular', theme: 'filled_blue', text: 'signin'}
+                    { theme: 'outline', size: 'large' }
                 )
 
                 google.accounts.id.prompt()
@@ -90,7 +92,7 @@ const GoogleContextProvider = (props) => {
     }, [])
 
     return (
-        <GoogleContext.Provider value={{flag: showLogin, userGoogle, hasAccount, userSariri, setUserSariri}}>
+        <GoogleContext.Provider value={{ flag: showLogin, userGoogle, hasAccount, userSariri, setUserSariri }}>
             {props.children}
         </GoogleContext.Provider>
     )
