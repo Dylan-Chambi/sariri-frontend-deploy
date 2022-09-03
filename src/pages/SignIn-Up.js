@@ -11,7 +11,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { GoogleContext } from "../context/googleContext";
 import { api } from "../api";
 import { useNavigate } from "react-router-dom";
-
+import Message from ".././components/global-components/popUpSignIn"
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -52,7 +52,7 @@ export default function SignIn({ signIn }) {
                 navigate("/home")
             }
         }).catch(err => {
-            alert("No se pudo registrar el usuario")
+            <Message/>
         });
     }
 
