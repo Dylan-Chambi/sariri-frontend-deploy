@@ -107,13 +107,12 @@ export default function SignIn({ signIn }) {
                             </Button></>}
 
                         <Button
-                            href="/home"
                             underline="none"
                             color="primary"
                             type="submit"
                             fullWidth
                             variant="contained"
-                            onClick={navigate('/home')}
+                            onClick={() => navigate('/home')}
                             sx={{ mt: 3, mb: 2 }}>
                             Skip
                         </Button>
