@@ -17,11 +17,26 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { getHotelInfo, getHotelMoreInfo } from '../api';
 import { Grid } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export default function InfoHoteles() {
   const navigate = useNavigate();
   const { hotel_id } = useParams();
   const [hotelInfo, setHotelInfo] = useState(null);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+    navigate('/home');
+    
+  };
 
   useEffect(() => {
     getHotelInfo(hotel_id).then((response) => {
@@ -30,8 +45,7 @@ export default function InfoHoteles() {
         setHotelInfo(response.data.data[0]);
         getMaxPrice(response.data.data[0].price);
       } catch (e) {
-        alert("Error loading hotel information")
-        navigate('/home')
+        setOpen(true);
       }
     }).catch((error) => {
       console.log(error);
@@ -171,6 +185,21 @@ export default function InfoHoteles() {
         </Box>
 
       </Box> : null}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"No se pudo cargar correctamente la página, lo sentimos."}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            CANCELAR
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

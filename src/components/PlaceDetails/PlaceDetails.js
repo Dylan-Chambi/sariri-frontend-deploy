@@ -4,7 +4,7 @@ import { Box, Typography, Button, Card, CardMedia, CardContent, CardActions, Chi
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PhoneIcon from '@material-ui/icons/Phone';
 import Rating from '@material-ui/lab/Rating';
-
+import FavButton from '../Info-Hotel/FavButton';
 import useStyles from './styles.js';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -71,15 +71,9 @@ const priceSubstring = (place.price)?.length < 7 ? (place.price) : (place.price)
           </Typography>
         )}
       </CardContent>
-      <CardActions>
-        <Button size="small" color="primary" onClick={() => window.open(place.web_url, '_blank')}>
-          Trip Advisor
-        </Button>
-        <Button size="small" color="primary" onClick={() => window.open(place.website, '_blank')}>
-          Página Web
-        </Button>
+      <CardActions justifyContent='right'>
         <Button size="small" color="primary" onClick={() => { }}>
-          Favorito
+          <FavButton/>
         </Button>
       </CardActions>
     </Card>
