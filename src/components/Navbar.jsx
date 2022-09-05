@@ -42,7 +42,7 @@ export default function Navbar() {
             <Link to="/home">Inicio</Link>
           </li>
           <li>
-            <Link to="/hotels">Hoteles</Link>
+            <Link to="/favs">Favoritos</Link>
           </li>
           <li>
             <Link to="/map">Mapa</Link>

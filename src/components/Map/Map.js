@@ -40,7 +40,6 @@ const Map = ({ coords, places, setCoords, setBounds, setChildClicked}) => {
                             : place.price ? (
                                 <Paper elevation={10} className={classes.paper}>
                                     <Typography className={classes.typography} variant="subtitle2" gutterBottom color='#24528A'
-                                   
                                    >
                                         {(place.price).length < 7 ? (place.price): (place.price).length == 7 ? (place.price).substring(3,(place.price).length) : (place.price).length == 8 ? (place.price).substring(4,(place.price).length)
                                             : (place.price).length == 9 ? (place.price).substring(5,(place.price).length): (place.price).length == 10 ?  (place.price).substring(6,(place.price).length) : (place.price).substring(7,(place.price).length)}

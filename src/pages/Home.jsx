@@ -12,11 +12,16 @@ import { Grid } from "@material-ui/core";
 import Map from "../components/Map/Map";
 import Hotels from "../components/Hotels";
 import ScrollReveal from "./../components/container/ScrollReveal";
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
  function Home() {
     const [places, setPlaces] = useState([])
     const {flag, userSariri} = useContext(GoogleContext)
-
     const [autocomplete, setAutocomplete] = useState(null);
     const [coords, setCoords] = useState({});
     const [childClicked, setChildClicked] = useState(null);
@@ -26,6 +31,16 @@ import ScrollReveal from "./../components/container/ScrollReveal";
     const [type, setType] = useState("hotels");
     const [rating, setRating] = useState("");
     const [priceRange, setPriceRange] = useState("");
+
+
+    const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  // const [open2, setOpen2] = React.useState(false);
+  // const handleClose2 = () => {
+  //   setOpen2(false);
+  // };
   
     // useEffect(() => {
     //     getPlacesData().then((data) => {console.log(data); setPlaces(data)})
@@ -41,7 +56,6 @@ import ScrollReveal from "./../components/container/ScrollReveal";
 
   useEffect(() => {
     const filtered = places.filter((place) => Number(place.rating) > rating);
-
     setFilteredPlaces(filtered);
   }, [rating]);
 
@@ -49,6 +63,9 @@ import ScrollReveal from "./../components/container/ScrollReveal";
     const filtered = places.filter(
       (place) => String(place.price_level) === priceRange
     );
+    if (filtered.length===0 && priceRange!=="") {
+      setOpen(true);
+    }
     filtered.map((place) => console.log("Nivel: " + place.price_level));
     setFilteredPlaces(filtered);
   }, [priceRange]);
@@ -58,7 +75,11 @@ import ScrollReveal from "./../components/container/ScrollReveal";
       setIsLoading(true);
 
       getPlacesData(type, bounds.sw, bounds.ne).then((data) => {
-        setPlaces(data.filter((place) => place.name && place.num_reviews > 0));
+        const dataFilter = data.filter((place) => place.name && place.num_reviews > 0);
+        // if (dataFilter.length===0) {
+        //   setOpen2(true);
+        // }
+        setPlaces(dataFilter);
         setFilteredPlaces([]);
         setRating("");
         setPriceRange("");
@@ -110,6 +131,21 @@ import ScrollReveal from "./../components/container/ScrollReveal";
         />
       </ScrollReveal>
       <Footer />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Lo sentimos, no se encontraron lugares de acuerdo al filtro seleccionado."}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
