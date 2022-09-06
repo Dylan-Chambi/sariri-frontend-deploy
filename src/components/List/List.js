@@ -7,6 +7,13 @@ import InformationButton from './InformationButton';
 import { color } from '@mui/system';
 import InputBase from '@mui/material/InputBase';
 import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   'label + &': {
     marginTop: theme.spacing(3),
@@ -45,8 +52,8 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange }) =>
 
   useEffect(() => {
     setElRefs((refs) => Array(places.length).fill().map((_, i) => refs[i] || createRef()));
+    console.log(places);
   }, [places]);
-
   return (
     <div className={classes.container}>
       <Box
@@ -88,6 +95,7 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange }) =>
                   <PlaceDetails selected={Number(childClicked) === i} refProp={elRefs[i]} place={place} />
                 </Grid>
               ))}
+              
             </Grid>
           </>
 

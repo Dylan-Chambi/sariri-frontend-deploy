@@ -7,7 +7,7 @@ import {GoogleContext} from "./context/googleContext";
 import Profile from "./pages/Profile";
 import InfoHoteles from "./pages/InfoHoteles";
 import Book from "./pages/Book";
-
+import Favorites from "./pages/Favorites";
 export default function App() {
     return (
         <Routes>
@@ -19,6 +19,7 @@ export default function App() {
             <Route path="/hotels-info/:hotel_id" element={<InfoHoteles />} />
             <Route path="/book" element={<Book />} />
             <Route path="/*"  element={<Navigate replace to="/home" />} />
+            <Route path="/favs" element={<Favorites />} />
         </Routes>
     );
 }
