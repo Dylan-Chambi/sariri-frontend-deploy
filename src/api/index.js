@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const rapidApiKey = "0f7cedbe8dmsha57acf563a88344p1933f1jsn537e014d99da";
-
 export const getPlacesData = async (type, sw, ne) => {
     try {
         const { data: { data } } = await axios.get(`https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary`, {

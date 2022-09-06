@@ -28,13 +28,6 @@ export default function Navbar() {
             <img src={logo} alt="" />
             Sariri
           </div>
-          <div className="toggle">
-            {navbarState ? (
-              <VscChromeClose onClick={() => setNavbarState(false)} />
-            ) : (
-              <GiHamburgerMenu onClick={() => setNavbarState(true)} />
-            )}
-          </div>
         </div>
 
         <ul>

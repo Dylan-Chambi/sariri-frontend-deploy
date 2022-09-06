@@ -55,3 +55,12 @@ body {
   width: 100% !important;
   font-size: 0.9rem !important;
 }
+.favorites-list {
+  display: grid;
+  grid-template-columns: repeat(3, 2fr);
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  grid-gap: 3rem;
+  padding: 1rem;
+}
