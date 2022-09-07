@@ -5,7 +5,7 @@ import { Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoritesCard from '../components/FavoritesCard/FavoritesCard';
 import { useEffect, useState } from 'react';
-import { api } from "../api";
+import Footer from '../components/Footer';
 export default function Favorites() {
     const [places, setPlaces] = useState([]);
     //useEffect(() => {
@@ -44,6 +44,7 @@ export default function Favorites() {
                     <FavoritesCard place={example} />
                     <FavoritesCard place={example} />
                 </section>
+                <Footer/>
         </div>
     );
 }
