@@ -57,10 +57,13 @@ body {
 }
 .favorites-list {
   display: grid;
-  grid-template-columns: repeat(3, 2fr);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   justify-content: center;
   align-items: center;
   justify-items: center;
-  grid-gap: 3rem;
+  grid-gap: min(5vw, 5vh);
   padding: 1rem;
+  margin: 1rem;
+  background-color: #041dff6f;
+  border-radius: 0.5rem;
 }

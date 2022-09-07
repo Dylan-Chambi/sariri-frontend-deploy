@@ -25,7 +25,7 @@ export default function FavoritesCard({place}) {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, padding:2, borderRadius:3  }}>
       <CardHeader
         title={place.hotel_name}
       />
