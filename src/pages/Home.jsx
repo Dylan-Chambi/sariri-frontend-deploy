@@ -17,7 +17,7 @@ function Home() {
   const { flag, user } = useContext(GoogleContext);
 
   const [autocomplete, setAutocomplete] = useState(null);
-  const [coords, setCoords] = useState({});
+  const [coords, setCoords] = useState(null);
   const [childClicked, setChildClicked] = useState(null);
   const [bounds, setBounds] = useState(null);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
@@ -57,15 +57,17 @@ function Home() {
     if (bounds) {
       setIsLoading(true);
 
-      getPlacesData(type, bounds.sw, bounds.ne).then((data) => {
-        setPlaces(data.filter((place) => place.name && place.num_reviews > 0));
+      getPlacesData(bounds.sw, bounds.ne).then((data) => {
+        setPlaces(data.filter((place) => true));
         setFilteredPlaces([]);
         setRating("");
         setPriceRange("");
         setIsLoading(false);
+      }).catch((error) => {
+        console.log(error);
       });
     }
-  }, [bounds, type]);
+  }, [bounds]);
 
   const onLoad = (autoC) => setAutocomplete(autoC);
 

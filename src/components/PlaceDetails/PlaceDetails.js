@@ -23,20 +23,19 @@ const priceSubstring = (place.price)?.length < 7 ? (place.price) : (place.price)
 
   if (selected) refProp?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const classes = useStyles();
-  console.log(place)
   return (
     <Card elevation={6}>
       <CardMedia
         style={{ height: 350 }}
-        image={place.photo ? place.photo.images.large.url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}
-        title={place.name}
+        image={place.photo_url ? place.photo_url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}
+        title={place.hotel_name}
       />
       <CardContent>
         <Typography gutterBottom variant="h5">
-          <Link to={'/hotels-info/' + place.location_id}>{place.name}</Link>
+          <Link to={'/hotels-info/' + place.location_id}>{place.hotel_name}</Link>
           </Typography>
         <Box display="flex" justifyContent="space-between" my={2}>
-          <Rating name="read-only" value={Number(place.rating)} readOnly />
+          <Rating name="read-only" value={Number(place.hotel_rating)} readOnly />
           <Typography component="legend">{place.num_reviews} reseña{place.num_reviews > 1 && 's'}</Typography>
         </Box>
         <Box display="flex" justifyContent="space-between">
@@ -60,9 +59,9 @@ const priceSubstring = (place.price)?.length < 7 ? (place.price) : (place.price)
         {place?.cuisine?.map(({ name }) => (
           <Chip key={name} size="small" label={name} className={classes.chip} />
         ))}
-        {place.address && (
+        {place.hotel_address && (
           <Typography gutterBottom variant="body2" color="textSecondary" className={classes.subtitle}>
-            <LocationOnIcon />{place.address}
+            <LocationOnIcon />{place.hotel_address}
           </Typography>
         )}
         {place.phone && (
