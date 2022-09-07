@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import Profile from '../pages/Profile'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Avatar, Button, Typography } from "@mui/material";
+import { GoogleContext } from "../context/googleContext";
+import axios from "axios";
+import { Box } from "@mui/system";
+import { deepOrange, deepPurple } from '@mui/material/colors';
 export default function Navbar() {
   const [navbarState, setNavbarState] = useState(false);
   const navigate = useNavigate()
@@ -12,6 +17,8 @@ export default function Navbar() {
   const goToSignIn = () => {
     navigate('/sign-in')
   }
+
+  const { flag, userSariri, userGoogle } = useContext(GoogleContext);
 
   return (
     <>
@@ -32,19 +39,29 @@ export default function Navbar() {
 
         <ul>
           <li>
-            <a href="/home">Inicio</a>
+            <Link to="/home">Inicio</Link>
           </li>
           <li>
-            <a href="#hotels">Hoteles</a>
+            <Link to="/favs">Favoritos</Link>
           </li>
           <li>
-            <a href="#map">Mapa</a>
+            <Link to="/map">Mapa</Link>
           </li>
           <li>
-            <a href="/profile" element={<Profile/>}>Perfil</a>
+            <Link to="/profile" >Perfil</Link>
           </li>
         </ul>
-        <button onClick={goToSignIn}>Registrarse</button>
+        {!flag ? 
+        <Box sx={{ display: 'flex', alignItems:"center", justifyContent:"center", m: 2 }}>
+        <Typography>{userSariri.user_name + " " + userSariri.user_lastName}</Typography>
+        <Avatar alt={userSariri.user_name + " " + userSariri.user_lastName} sx={{ml: 1.5, bgcolor: '#023e8a'}}>
+          {/* {userSariri.user_name[0]} */}
+        </Avatar>
+        </Box>
+        : <Box>
+          <Button sx={{ mr: 1 }} onClick={() => navigate('/sign-in')} >Login</Button>
+          <Button sx={{ mr: 1 }} onClick={() => navigate('/sign-up')} >Registrarse</Button>
+        </Box>}
       </Nav>
     </>
   );

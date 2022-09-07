@@ -40,7 +40,6 @@ const Map = ({ coords, places, setCoords, setBounds, setChildClicked}) => {
                             : place.hotel_price ? (
                                 <Paper elevation={10} className={classes.paper}>
                                     <Typography className={classes.typography} variant="subtitle2" gutterBottom color='#24528A'
-                                   
                                    >
                                         {place.hotel_price}$
                                     </Typography>

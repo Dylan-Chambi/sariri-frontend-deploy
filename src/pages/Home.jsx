@@ -5,31 +5,46 @@ import Footer from "../components/Footer";
 import Principal from "../components/Principal";
 import Navbar from "../components/Navbar";
 import ScrollToTop from "../components/ScrollToTop";
-import scrollReveal from "scrollreveal";
+import scrollreveal from "scrollreveal";
+import {useContext} from "react";
+import {GoogleContext} from "../context/googleContext";
 import { Grid } from "@material-ui/core";
 import Map from "../components/Map/Map";
-import { useContext } from "react";
-import { GoogleContext } from "../context/googleContext";
 import Hotels from "../components/Hotels";
 import ScrollReveal from "./../components/container/ScrollReveal";
-function Home() {
-  const sectionRef = useRef < HTMLElement > null;
-  const { flag, user } = useContext(GoogleContext);
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
-  const [autocomplete, setAutocomplete] = useState(null);
-  const [coords, setCoords] = useState(null);
-  const [childClicked, setChildClicked] = useState(null);
-  const [bounds, setBounds] = useState(null);
-  const [filteredPlaces, setFilteredPlaces] = useState([]);
-  const [places, setPlaces] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [type, setType] = useState("hotels");
-  const [rating, setRating] = useState("");
-  const [priceRange, setPriceRange] = useState("");
+ function Home() {
+    const [places, setPlaces] = useState([])
+    const {flag, userSariri} = useContext(GoogleContext)
+    const [autocomplete, setAutocomplete] = useState(null);
+    const [coords, setCoords] = useState(null);
+    const [childClicked, setChildClicked] = useState(null);
+    const [bounds, setBounds] = useState(null);
+    const [filteredPlaces, setFilteredPlaces] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [type, setType] = useState("hotels");
+    const [rating, setRating] = useState("");
+    const [priceRange, setPriceRange] = useState("Todos");
 
-  // useEffect(() => {
-  //     getPlacesData().then((data) => {console.log(data); setPlaces(data)})
-  // }, [])
+
+    const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  // const [open2, setOpen2] = React.useState(false);
+  // const handleClose2 = () => {
+  //   setOpen2(false);
+  // };
+  
+    // useEffect(() => {
+    //     getPlacesData().then((data) => {console.log(data); setPlaces(data)})
+    // }, [])
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -41,7 +56,6 @@ function Home() {
 
   useEffect(() => {
     const filtered = places.filter((place) => Number(place.rating) > rating);
-
     setFilteredPlaces(filtered);
   }, [rating]);
 
@@ -49,6 +63,9 @@ function Home() {
     const filtered = places.filter(
       (place) => String(place.price_level) === priceRange
     );
+    if (filtered.length===0 && priceRange!=="Todos") {
+      setOpen(true);
+    }
     filtered.map((place) => console.log("Nivel: " + place.price_level));
     setFilteredPlaces(filtered);
   }, [priceRange]);
@@ -61,7 +78,7 @@ function Home() {
         setPlaces(data.filter((place) => true));
         setFilteredPlaces([]);
         setRating("");
-        setPriceRange("");
+        setPriceRange("Todos");
         setIsLoading(false);
       }).catch((error) => {
         console.log(error);
@@ -112,6 +129,21 @@ function Home() {
         />
       </ScrollReveal>
       <Footer />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Lo sentimos, no se encontraron lugares de acuerdo al filtro seleccionado."}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
