@@ -1,24 +1,18 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
-import Profile from '../pages/Profile'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Avatar, Button, Typography } from "@mui/material";
 import { GoogleContext } from "../context/googleContext";
-import axios from "axios";
 import { Box } from "@mui/system";
-import { deepOrange, deepPurple } from '@mui/material/colors';
 export default function Navbar() {
   const [navbarState, setNavbarState] = useState(false);
   const navigate = useNavigate()
 
-  const goToSignIn = () => {
-    navigate('/sign-in')
-  }
 
-  const { flag, userSariri, userGoogle } = useContext(GoogleContext);
+  const { flag, userSariri } = useContext(GoogleContext);
 
   return (
     <>
@@ -146,41 +140,41 @@ const Nav = styled.nav`
   }
 `;
 
-const ResponsiveNav = styled.div`
-  display: flex;
-  position: absolute;
-  z-index: 1;
-  top: ${({ state }) => (state ? "50px" : "-400px")};
-  background-color: white;
-  height: 30vh;
-  width: 100%;
-  align-items: center;
-  transition: 0.3s ease-in-out;
-  ul {
-    list-style-type: none;
-    width: 100%;
-    li {
-      width: 100%;
-      margin: 1rem 0;
-      margin-left: 2rem;
+// const ResponsiveNav = styled.div`
+//   display: flex;
+//   position: absolute;
+//   z-index: 1;
+//   top: ${({ state }) => (state ? "50px" : "-400px")};
+//   background-color: white;
+//   height: 30vh;
+//   width: 100%;
+//   align-items: center;
+//   transition: 0.3s ease-in-out;
+//   ul {
+//     list-style-type: none;
+//     width: 100%;
+//     li {
+//       width: 100%;
+//       margin: 1rem 0;
+//       margin-left: 2rem;
 
-      a {
-        text-decoration: none;
-        color: #0077b6;
-        font-size: 1.2rem;
-        fontFamily: "Roboto", sans-serif;
-        transition: 0.1s ease-in-out;
-        &:hover {
-          color: #023e8a;
-        }
-      }
-      &:first-of-type {
-        a {
-          color: #023e8a;
-          font-weight: 900;
-          fontFamily: "Roboto", sans-serif;
-        }
-      }
-    }
-  }
-`;
+//       a {
+//         text-decoration: none;
+//         color: #0077b6;
+//         font-size: 1.2rem;
+//         fontFamily: "Roboto", sans-serif;
+//         transition: 0.1s ease-in-out;
+//         &:hover {
+//           color: #023e8a;
+//         }
+//       }
+//       &:first-of-type {
+//         a {
+//           color: #023e8a;
+//           font-weight: 900;
+//           fontFamily: "Roboto", sans-serif;
+//         }
+//       }
+//     }
+//   }
+// `;

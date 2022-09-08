@@ -9,29 +9,23 @@ import Navbar from '../components/Navbar';
 import Divider from '@mui/material/Divider';
 import Services from '../components/Info-Hotel/Services';
 import Mapa from '../components/Info-Hotel/Mapa';
-import Stars from '../components/Info-Hotel/Stars';
 import Comment from '../components/Info-Hotel/CommentUser';
 import Others from '../components/Info-Hotel/CommetsOthersUsers';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useEffect } from 'react';
-import { getHotelInfo, getHotelMoreInfo } from '../api';
 import { Grid } from '@mui/material';
-import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export default function InfoHoteles() {
   console.log('InfoHoteles');
   const navigate = useNavigate();
   const location = useLocation();
-  const [hotelInfo, setHotel] = useState(location.state.hotel_info);
+  const hotelInfo = location.state.hotel_info;
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
 
   const handleClose = () => {

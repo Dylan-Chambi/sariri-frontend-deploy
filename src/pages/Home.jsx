@@ -1,27 +1,19 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { getPlacesData } from "../api";
 import Footer from "../components/Footer";
 import Principal from "../components/Principal";
 import Navbar from "../components/Navbar";
 import ScrollToTop from "../components/ScrollToTop";
-import scrollreveal from "scrollreveal";
-import {useContext} from "react";
-import {GoogleContext} from "../context/googleContext";
-import { Grid } from "@material-ui/core";
-import Map from "../components/Map/Map";
 import Hotels from "../components/Hotels";
 import ScrollReveal from "./../components/container/ScrollReveal";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
  function Home() {
     const [places, setPlaces] = useState([])
-    const {flag, userSariri} = useContext(GoogleContext)
+    //const {flag, userSariri} = useContext(GoogleContext)
     const [autocomplete, setAutocomplete] = useState(null);
     const [coords, setCoords] = useState(null);
     const [childClicked, setChildClicked] = useState(null);
@@ -57,7 +49,7 @@ import DialogTitle from '@mui/material/DialogTitle';
   useEffect(() => {
     const filtered = places.filter((place) => Number(place.rating) > rating);
     setFilteredPlaces(filtered);
-  }, [rating]);
+  }, [rating, places]);
 
   useEffect(() => {
     const filtered = places.filter(
@@ -71,7 +63,7 @@ import DialogTitle from '@mui/material/DialogTitle';
     }
     setFilteredPlaces(filtered);
     console.log(filtered);
-  }, [priceRange]);
+  }, [priceRange, places]);
 
   useEffect(() => {
     if (bounds) {

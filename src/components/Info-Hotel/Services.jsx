@@ -1,11 +1,3 @@
-import WifiIcon from '@mui/icons-material/Wifi';
-import PoolIcon from '@mui/icons-material/Pool';
-import LocalParkingIcon from '@mui/icons-material/LocalParking';
-import FreeBreakfastIcon from '@mui/icons-material/FreeBreakfast';
-import TvIcon from '@mui/icons-material/Tv';
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import BedroomParentIcon from '@mui/icons-material/BedroomParent';
-import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import Icon from '@mui/material/Icon';

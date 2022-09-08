@@ -1,18 +1,11 @@
 import React, { useState, useEffect, createRef } from 'react';
-import { CircularProgress, Grid, Typography, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
+import { CircularProgress, Grid, Typography, MenuItem, FormControl, Select } from '@material-ui/core';
 import useStyles from './styles.js';
 import Box from '@mui/material/Box';
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import InformationButton from './InformationButton';
-import { color } from '@mui/system';
 import InputBase from '@mui/material/InputBase';
 import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   'label + &': {

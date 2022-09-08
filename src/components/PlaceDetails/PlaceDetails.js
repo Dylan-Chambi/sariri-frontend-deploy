@@ -6,18 +6,17 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import Rating from '@material-ui/lab/Rating';
 import FavButton from '../Info-Hotel/FavButton';
 import useStyles from './styles.js';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const PlaceDetails = ({ place, selected, refProp }) => {
-  const navigate = useNavigate();
   const [pricePerNight, setPricePerNight] = useState("")
 
-const priceSubstring = (place.hotel_price)?.length < 7 ? (place.hotel_price) : (place.hotel_price)?.length == 7 ? (place.hotel_price).substring(3, (place.hotel_price).length) : (place.hotel_price)?.length == 8 ? (place.hotel_price).substring(4, (place.hotel_price).length)
-    : (place.hotel_price)?.length == 9 ? (place.hotel_price).substring(5, (place.hotel_price).length) : (place.hotel_price)?.length == 10 ? (place.hotel_price).substring(6, (place.hotel_price).length) : (place.hotel_price)?.substring(7, (place.hotel_price).length)
+const priceSubstring = (place.hotel_price)?.length < 7 ? (place.hotel_price) : (place.hotel_price)?.length === 7 ? (place.hotel_price).substring(3, (place.hotel_price).length) : (place.hotel_price)?.length === 8 ? (place.hotel_price).substring(4, (place.hotel_price).length)
+    : (place.hotel_price)?.length === 9 ? (place.hotel_price).substring(5, (place.hotel_price).length) : (place.hotel_price)?.length === 10 ? (place.hotel_price).substring(6, (place.hotel_price).length) : (place.hotel_price)?.substring(7, (place.hotel_price).length)
  
   useEffect(() => {
     setPricePerNight(priceSubstring)
-  }, []);
+  }, [priceSubstring]);
 
 
 
@@ -54,7 +53,7 @@ const priceSubstring = (place.hotel_price)?.length < 7 ? (place.hotel_price) : (
         </Box>
         {place?.awards?.map((award) => (
           <Box display="flex" justifyContent="space-between" my={1} alignItems="center">
-            <img src={award.badge_url} />
+            <img src={award.badge_url} alt={award.display_name} />
             <Typography variant="subtitle2" color="textSecondary">{award.display_name}</Typography>
           </Box>
         ))}

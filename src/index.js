@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import GoogleContextProvider from './context/googleContext';
 import { BrowserRouter } from 'react-router-dom';

@@ -1,13 +1,9 @@
 import { Typography } from '@mui/material';
 import * as React from 'react';
-import { useEffect, useState, useContext } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import mapaxd from '../../assets/mapaxd.png';
 import Box from '@mui/material/Box';
 import GoogleMapReact from 'google-map-react';
 import mapStyles from '../Map/mapStyles';
 export default function Mapa({ coords }) {
-    console.log(coords)
     return (
         <Box bgcolor={'#1c74d4'} marginLeft="10" sx={{
             padding: '15px',
@@ -34,6 +30,7 @@ export default function Mapa({ coords }) {
                             height="50px"
                             width="50px"
                             src={'https://www.pngall.com/wp-content/uploads/10/Map-Marker-Transparent-PNG.png'}
+                            alt="marker"
                         ></img>
                     </Box>
                 </GoogleMapReact>

@@ -11,13 +11,13 @@ export default function StandardImageList({ imageList }) {
     <ImageList sx={{ width: matchDownMd?450:560, height: 560, gridAutoFlow: "column",
     overflow: "none", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
     backgroundColor: 'primary.main',
-    gridTemplateColumns: "repeat(auto-fill,minmax(460px,1fr)) !important",
     gridAutoColumns: "minmax(460px, 1fr)", padding: 3, borderRadius:3}} cols={3} rowHeight={500} >
       {imageList.map((item) => (
         <ImageListItem key={item.img}>
           <img
             src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
             srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+            alt="img"
           />
         </ImageListItem>
       ))}

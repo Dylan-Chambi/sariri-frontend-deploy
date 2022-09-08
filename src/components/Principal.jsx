@@ -2,13 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import homeImage from "../assets/illimani.jpg";
 import { Autocomplete } from '@react-google-maps/api';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
 import Select from "../components/Principal/Select";
 import Calendar from "../components/Principal/Calendar";
 import Destination from "../components/Principal/Destination";
-import Button from "../components/Principal/Button";
 export default function Hero({onPlaceChanged, onLoad, showHotels}) {
 
   return (
