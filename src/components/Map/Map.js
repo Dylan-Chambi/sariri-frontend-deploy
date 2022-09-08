@@ -5,6 +5,7 @@ import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 
 import mapStyles from './mapStyles';
 import useStyles from './styles.js';
+import { Box } from '@mui/system';
 
 const Map = ({ coords, places, setCoords, setBounds, setChildClicked }) => {
     const matches = useMediaQuery('(min-width:600px)');
@@ -15,7 +16,6 @@ const Map = ({ coords, places, setCoords, setBounds, setChildClicked }) => {
         <div className={classes.mapContainer}>
             <GoogleMapReact
                 bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
-                defaultCenter={coords}
                 center={coords}
                 defaultZoom={14}
                 margin={[50, 50, 50, 50]}
@@ -28,7 +28,7 @@ const Map = ({ coords, places, setCoords, setBounds, setChildClicked }) => {
                 onChildClick={(child) => setChildClicked(child)}
             >
                 {places.length && places.map((place, i) => (
-                    <div
+                    <Box
                         className={classes.markerContainer}
                         lat={Number(place.hotel_lat)}
                         lng={Number(place.hotel_lng)}
@@ -45,7 +45,7 @@ const Map = ({ coords, places, setCoords, setBounds, setChildClicked }) => {
                                     </Typography>
                                 </Paper>
                             ) : <div />}
-                    </div>
+                    </Box>
                 ))}
             </GoogleMapReact>
         </div>

@@ -11,8 +11,7 @@ export const getPlacesData = async (sw, ne) => {
                 tr_longitude: ne.lng,
                 tr_latitude: ne.lat
             });
-        console.log("data", data);
-
+            console.log(data);
         return data.data;
     } catch (error) {
         console.log(error);
