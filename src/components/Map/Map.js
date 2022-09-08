@@ -7,7 +7,7 @@ import Rating from '@material-ui/lab/Rating';
 import mapStyles from './mapStyles';
 import useStyles from './styles.js';
 
-const Map = ({ coords, places, setCoords, setBounds, setChildClicked}) => {
+const Map = ({ coords, places, setCoords, setBounds, setChildClicked }) => {
     const matches = useMediaQuery('(min-width:600px)');
     const classes = useStyles();
 
@@ -15,7 +15,7 @@ const Map = ({ coords, places, setCoords, setBounds, setChildClicked}) => {
     return (
         <div className={classes.mapContainer}>
             <GoogleMapReact
-                bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY}}
+                bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
                 defaultCenter={coords}
                 center={coords}
                 defaultZoom={14}
@@ -36,15 +36,16 @@ const Map = ({ coords, places, setCoords, setBounds, setChildClicked}) => {
                         key={i}
                     >
                         {(!matches)
-                            ? <LocationOnOutlinedIcon  fontSize="large"/>
+                            ? <LocationOnOutlinedIcon fontSize="large" />
                             : place.hotel_price ? (
                                 <Paper elevation={10} className={classes.paper}>
                                     <Typography className={classes.typography} variant="subtitle2" gutterBottom color='#24528A'
-                                   >
-                                        {place.hotel_price}$
+                                    >
+                                        {(place.hotel_price)?.length < 7 ? (place.hotel_price) : (place.hotel_price)?.length == 7 ? (place.hotel_price).substring(3, (place.hotel_price).length) : (place.hotel_price)?.length == 8 ? (place.hotel_price).substring(4, (place.hotel_price).length)
+                                            : (place.hotel_price)?.length == 9 ? (place.hotel_price).substring(5, (place.hotel_price).length) : (place.hotel_price)?.length == 10 ? (place.hotel_price).substring(6, (place.hotel_price).length) : (place.hotel_price)?.substring(7, (place.hotel_price).length)}
                                     </Typography>
                                 </Paper>
-                            ) : <div/>}
+                            ) : <div />}
                     </div>
                 ))}
             </GoogleMapReact>

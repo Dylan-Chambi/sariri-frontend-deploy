@@ -12,7 +12,7 @@ import Mapa from '../components/Info-Hotel/Mapa';
 import Stars from '../components/Info-Hotel/Stars';
 import Comment from '../components/Info-Hotel/CommentUser';
 import Others from '../components/Info-Hotel/CommetsOthersUsers';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { getHotelInfo, getHotelMoreInfo } from '../api';
@@ -26,31 +26,18 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export default function InfoHoteles() {
+  console.log('InfoHoteles');
   const navigate = useNavigate();
-  const { hotel_id } = useParams();
-  const [hotelInfo, setHotelInfo] = useState(null);
+  const location = useLocation();
+  const [hotelInfo, setHotel] = useState(location.state.hotel_info);
 
   const [open, setOpen] = React.useState(false);
+
 
   const handleClose = () => {
     setOpen(false);
     navigate('/home');
-    
   };
-
-  useEffect(() => {
-    getHotelInfo(hotel_id).then((response) => {
-      try {
-        console.log(response.data.data[0]);
-        setHotelInfo(response.data.data[0]);
-        getMaxPrice(response.data.data[0].price);
-      } catch (e) {
-        setOpen(true);
-      }
-    }).catch((error) => {
-      console.log(error);
-    });
-  }, [hotel_id, navigate])
 
   return (
     <>
@@ -92,11 +79,11 @@ export default function InfoHoteles() {
                   padding: '1rem',
                   fontFamily: 'Roboto',
                 }
-                }>{hotelInfo.name}</Typography>
+                }>{hotelInfo.hotel_name}</Typography>
 
               </Grid>
               <Grid item xs={10} md={5} alignSelf='self-end'>
-                <Contacts location_string={hotelInfo.location_string} phone_number={hotelInfo.phone} />
+                <Contacts location_string={hotelInfo.hotel_address} phone_number={hotelInfo.contact_number} />
               </Grid>
               <Grid item xs={2} md={2} alignSelf='center'>
                 <FavButton />
@@ -121,7 +108,7 @@ export default function InfoHoteles() {
           borderRadius: '10px',
           marginBottom: '2rem',
         }}>
-          <Images imageList={hotelInfo.photo.images ? [{ img: hotelInfo.photo.images.original.url, tittle: hotelInfo.name }] : []} />
+          <Images imageList={hotelInfo.photo_url_original ? [{ img: hotelInfo.photo_url_original, tittle: hotelInfo.hotel_name }] : []} />
 
         </Box>
         <Divider color="#000" />
@@ -134,7 +121,7 @@ export default function InfoHoteles() {
             marginBottom: '2rem',
           }}
         >
-          <Reservar price={getMaxPrice(hotelInfo.price)} />
+          <Reservar price={getMaxPrice(hotelInfo.hotel_price)} />
         </Box>
         <Divider color="#000" />
         <Box sx={{
@@ -162,10 +149,10 @@ export default function InfoHoteles() {
             }}>
               SERVICIOS
             </Typography>
-            <Services amenitiesList={hotelInfo.amenities} />
+            <Services serviceList={hotelInfo.services} />
 
           </Box>
-          <Mapa coords={{ lat: parseFloat(hotelInfo.latitude), lng: parseFloat(hotelInfo.longitude) }} />
+          <Mapa coords={{ lat: parseFloat(hotelInfo.hotel_lat), lng: parseFloat(hotelInfo.hotel_lng) }} />
 
         </Box>
         <Divider color="#000" />

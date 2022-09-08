@@ -28,7 +28,6 @@ import DialogTitle from '@mui/material/DialogTitle';
     const [bounds, setBounds] = useState(null);
     const [filteredPlaces, setFilteredPlaces] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [type, setType] = useState("hotels");
     const [rating, setRating] = useState("");
     const [priceRange, setPriceRange] = useState("Todos");
 
@@ -36,6 +35,7 @@ import DialogTitle from '@mui/material/DialogTitle';
     const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
+    setPriceRange("Todos");
   };
   // const [open2, setOpen2] = React.useState(false);
   // const handleClose2 = () => {
@@ -61,13 +61,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 
   useEffect(() => {
     const filtered = places.filter(
-      (place) => String(place.price_level) === priceRange
+      (place) => {
+        console.log("priceRange", place.price_level);
+        return place.price_level === priceRange
+      }
     );
     if (filtered.length===0 && priceRange!=="Todos") {
       setOpen(true);
     }
-    filtered.map((place) => console.log("Nivel: " + place.price_level));
     setFilteredPlaces(filtered);
+    console.log(filtered);
   }, [priceRange]);
 
   useEffect(() => {
@@ -75,7 +78,7 @@ import DialogTitle from '@mui/material/DialogTitle';
       setIsLoading(true);
 
       getPlacesData(bounds.sw, bounds.ne).then((data) => {
-        setPlaces(data.filter((place) => true));
+        setPlaces(data);
         setFilteredPlaces([]);
         setRating("");
         setPriceRange("Todos");

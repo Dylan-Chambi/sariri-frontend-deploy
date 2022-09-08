@@ -12,8 +12,8 @@ const PlaceDetails = ({ place, selected, refProp }) => {
   const navigate = useNavigate();
   const [pricePerNight, setPricePerNight] = useState("")
 
-const priceSubstring = (place.price)?.length < 7 ? (place.price) : (place.price)?.length == 7 ? (place.price).substring(3, (place.price).length) : (place.price)?.length == 8 ? (place.price).substring(4, (place.price).length)
-    : (place.price)?.length == 9 ? (place.price).substring(5, (place.price).length) : (place.price)?.length == 10 ? (place.price).substring(6, (place.price).length) : (place.price)?.substring(7, (place.price).length)
+const priceSubstring = (place.hotel_price)?.length < 7 ? (place.hotel_price) : (place.hotel_price)?.length == 7 ? (place.hotel_price).substring(3, (place.hotel_price).length) : (place.hotel_price)?.length == 8 ? (place.hotel_price).substring(4, (place.hotel_price).length)
+    : (place.hotel_price)?.length == 9 ? (place.hotel_price).substring(5, (place.hotel_price).length) : (place.hotel_price)?.length == 10 ? (place.hotel_price).substring(6, (place.hotel_price).length) : (place.hotel_price)?.substring(7, (place.hotel_price).length)
  
   useEffect(() => {
     setPricePerNight(priceSubstring)
@@ -27,12 +27,14 @@ const priceSubstring = (place.price)?.length < 7 ? (place.price) : (place.price)
     <Card elevation={6}>
       <CardMedia
         style={{ height: 350 }}
-        image={place.photo_url ? place.photo_url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}
+        image={place.photo_url_original ? place.photo_url_original : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}
         title={place.hotel_name}
       />
       <CardContent>
         <Typography gutterBottom variant="h5">
-          <Link to={'/hotels-info/' + place.location_id}>{place.hotel_name}</Link>
+          <Link to='/hotel-info' state={{hotel_info: place}} style={{ textDecoration: 'none', color: 'black' }}>
+            {place.hotel_name}
+          </Link>
           </Typography>
         <Box display="flex" justifyContent="space-between" my={2}>
           <Rating name="read-only" value={Number(place.hotel_rating)} readOnly />
@@ -47,28 +49,28 @@ const priceSubstring = (place.price)?.length < 7 ? (place.price) : (place.price)
         <Box display="flex" justifyContent="space-between">
           <Typography component="legend">Puesto </Typography>
           <Typography gutterBottom variant="subtitle1">
-            {place.ranking}
+            {place.hotel_ranking}
           </Typography>
         </Box>
         {place?.awards?.map((award) => (
           <Box display="flex" justifyContent="space-between" my={1} alignItems="center">
-            <img src={award.images.small} />
+            <img src={award.badge_url} />
             <Typography variant="subtitle2" color="textSecondary">{award.display_name}</Typography>
           </Box>
-        ))}
-        {place?.cuisine?.map(({ name }) => (
-          <Chip key={name} size="small" label={name} className={classes.chip} />
         ))}
         {place.hotel_address && (
           <Typography gutterBottom variant="body2" color="textSecondary" className={classes.subtitle}>
             <LocationOnIcon />{place.hotel_address}
           </Typography>
         )}
-        {place.phone && (
+        {place.contact_number && (
           <Typography variant="body2" color="textSecondary" className={classes.spacing}>
-            <PhoneIcon /> {place.phone}
+            <PhoneIcon /> {place.contact_number}
           </Typography>
         )}
+        {place?.services?.map(({ service_name }) => (
+          <Chip key={service_name} size="small" label={service_name} className={classes.chip} />
+        ))}
       </CardContent>
       <CardActions justifyContent='right'>
         <Button size="small" color="primary" onClick={() => { }}>
