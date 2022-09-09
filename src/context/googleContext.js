@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from 'react'
 import jwt_decode from 'jwt-decode'
 import { useNavigate } from "react-router-dom";
 import { api } from '../api'
+import Cookies from 'js-cookie';
 
 export const GoogleContext = createContext()
 
@@ -38,56 +39,75 @@ const GoogleContextProvider = (props) => {
     }
 
     useEffect(() => {
-        const handleCallbackResponse = async (response) => {
-            //console.log('Encoded JWT ID Token: '+ response.credential)
-            var userObject = jwt_decode(response.credential)
-            //console.log(userObject)
-            setUserGoogle(userObject)
-            await api.get('/user-exist/' + userObject.sub).then(async (response) => {
-                const userHasAccount = response.data.userExists;
-                if (userHasAccount) {
-                    const userData = await api.get('/user/' + userObject.sub);
-                    setUserSariri(userData.data[0])
-                    navigate('/home')
-                } else {
-                    navigate('/sign-up')
-                }
-                setHasAccount(userHasAccount)
-                setShowLogin(false)
-                hideButton()
-            }).catch(() => {
-                alert("Error checking in database")
-            })
-        }
+        const googleToken = Cookies.get('googleToken')
+        const saririCookie = JSON.parse(Cookies.get('saririCookie'))
+
+        console.log("googleToken", googleToken)
+        console.log("saririCookie", saririCookie)
 
         const googleSrc = 'https://accounts.google.com/gsi/client'
 
-        loadScript(googleSrc).then(() => {
-            /*global google*/
-            google.accounts.id.initialize({
-                client_id: "154712406455-1f9hr3obijb96tobdrej0sidpjm913nq.apps.googleusercontent.com",
-                callback: handleCallbackResponse
-            })
+        if (googleToken && saririCookie) {
+            const decoded = jwt_decode(googleToken)
+            setUserGoogle(decoded)
+            setUserSariri(saririCookie)
+            setShowLogin(false)
+            setHasAccount(true)
+        } else {
 
-            const signInDiv = document.getElementById('signInDiv')
+            const handleCallbackResponse = async (response) => {
+                var userObject = jwt_decode(response.credential)
+                console.log(response.credential)
+                setUserGoogle(userObject)
 
-            if (signInDiv) {
-                google.accounts.id.renderButton(
-                    signInDiv,
-                    { theme: 'outline', size: 'large' }
-                )
-
-                google.accounts.id.prompt()
+                await api.get('/user-exist/' + userObject.sub).then(async (responseBack) => {
+                    const userHasAccount = responseBack.data.userExists;
+                    if (userHasAccount) {
+                        const userData = await api.get('/user/' + userObject.sub);
+                        setUserSariri(userData.data[0])
+                        Cookies.set('googleToken', response.credential)
+                        Cookies.set('saririCookie', JSON.stringify(userData.data[0]))
+                        navigate('/home')
+                    } else {
+                        navigate('/sign-up')
+                    }
+                    setHasAccount(userHasAccount)
+                    setShowLogin(false)
+                    hideButton()
+                }).catch(() => {
+                    alert("Error checking in database")
+                })
             }
 
-        }).catch((err) => {
-            console.log("Error loading google script: " + err)
-        });
+            loadScript(googleSrc).then(() => {
+                /*global google*/
+                google.accounts.id.initialize({
+                    client_id: "154712406455-1f9hr3obijb96tobdrej0sidpjm913nq.apps.googleusercontent.com",
+                    callback: handleCallbackResponse
+                })
+
+                const signInDiv = document.getElementById('signInDiv')
+
+                if (signInDiv) {
+                    google.accounts.id.renderButton(
+                        signInDiv,
+                        { theme: 'outline', size: 'large' }
+                    )
+
+                    google.accounts.id.prompt()
+                }
+
+            }).catch((err) => {
+                console.log("Error loading google script: " + err)
+            });
+
+        }
 
         return () => {
             const scriptTag = document.querySelector(`script[src="${googleSrc}"]`)
             if (scriptTag) scriptTag.remove()
         }
+
     }, [navigate])
 
     return (
