@@ -8,7 +8,7 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 export default function IconCheckboxes() {
   return (
     <div>
-      <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+      <Checkbox {...label} icon={<FavoriteBorder sx={{width: '50px', height:'50px'}} />} checkedIcon={<Favorite sx={{width: '50px', height:'50px'}} />} />
     </div>
   );
 }

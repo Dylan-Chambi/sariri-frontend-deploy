@@ -58,7 +58,7 @@ export default function InfoHoteles() {
             marginRight: '2%'
           }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} md={5}>
+              <Grid item xs={10} md={5}>
 
                 <Typography sx={{
                   fontWeight: 'bold',
@@ -76,9 +76,6 @@ export default function InfoHoteles() {
                 }>{hotelInfo.hotel_name}</Typography>
 
               </Grid>
-              <Grid item xs={10} md={5} alignSelf='self-end'>
-                <Contacts location_string={hotelInfo.hotel_address} phone_number={hotelInfo.contact_number} />
-              </Grid>
               <Grid item xs={2} md={2} alignSelf='center'>
                 <FavButton />
               </Grid>
@@ -86,13 +83,10 @@ export default function InfoHoteles() {
 
 
           </Box>
-
-
-
         </Box>
         <Box sx={{
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
           width: '100%',
@@ -103,7 +97,41 @@ export default function InfoHoteles() {
           marginBottom: '2rem',
         }}>
           <Images imageList={hotelInfo.photo_url_original ? [{ img: hotelInfo.photo_url_original, tittle: hotelInfo.hotel_name }] : []} />
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'left',
+            justifyContent: 'center',
+            marginLeft: '2rem',
+          }}>
+            <Typography sx={{
+                fontWeight: 'bold',
+                fontSize: '2rem',
+                textAlign: 'left',
+                marginLeft: '2rem',
+              }}>
+                INFORMACION
+              </Typography>
+            <Grid item xs={10} md={5}>
+              <Contacts location_string={hotelInfo.hotel_address} phone_number={hotelInfo.contact_number} />
+            </Grid>
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'left',
+            }}>
+              <Typography sx={{
+                fontWeight: 'bold',
+                fontSize: '2rem',
+                textAlign: 'left',
+                marginLeft: '2rem',
+              }}>
+                SERVICIOS
+              </Typography>
+              <Services serviceList={hotelInfo.services} />
 
+            </Box>
+          </Box>
         </Box>
         <Divider color="#000" />
         <Box
@@ -126,26 +154,7 @@ export default function InfoHoteles() {
           height: '100%',
           padding: '2rem',
         }}>
-          <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%',
-            height: '100%',
 
-          }}>
-            <Typography sx={{
-              fontWeight: 'bold',
-              fontSize: '2rem',
-              textAlign: 'left',
-              marginLeft: '15rem',
-              marginTop: '1rem',
-              marginBottom: '1rem',
-            }}>
-              SERVICIOS
-            </Typography>
-            <Services serviceList={hotelInfo.services} />
-
-          </Box>
           <Mapa coords={{ lat: parseFloat(hotelInfo.hotel_lat), lng: parseFloat(hotelInfo.hotel_lng) }} />
 
         </Box>
