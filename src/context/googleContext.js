@@ -19,10 +19,9 @@ const loadScript = (src) =>
 
 
 const GoogleContextProvider = (props) => {
-    const [userGoogle, setUserGoogle] = useState({})
-    const [userSariri, setUserSariri] = useState({})
+    const [userGoogle, setUserGoogle] = useState(null)
+    const [userSariri, setUserSariri] = useState(null)
     const [showLogin, setShowLogin] = useState(true)
-    const [hasAccount, setHasAccount] = useState(false)
     const navigate = useNavigate();
 
     // const handleSignOut = (event) => {
@@ -40,11 +39,8 @@ const GoogleContextProvider = (props) => {
 
     useEffect(() => {
         const googleToken = Cookies.get('googleToken')
-        const saririCookie = JSON.parse(Cookies.get('saririCookie'))
-
-        console.log("googleToken", googleToken)
-        console.log("saririCookie", saririCookie)
-
+        const saririCookie = JSON.parse(Cookies.get('saririCookie') ?? null)
+        
         const googleSrc = 'https://accounts.google.com/gsi/client'
 
         if (googleToken && saririCookie) {
@@ -52,12 +48,10 @@ const GoogleContextProvider = (props) => {
             setUserGoogle(decoded)
             setUserSariri(saririCookie)
             setShowLogin(false)
-            setHasAccount(true)
         } else {
 
             const handleCallbackResponse = async (response) => {
                 var userObject = jwt_decode(response.credential)
-                console.log(response.credential)
                 setUserGoogle(userObject)
 
                 await api.get('/user-exist/' + userObject.sub).then(async (responseBack) => {
@@ -71,7 +65,6 @@ const GoogleContextProvider = (props) => {
                     } else {
                         navigate('/sign-up')
                     }
-                    setHasAccount(userHasAccount)
                     setShowLogin(false)
                     hideButton()
                 }).catch(() => {
@@ -111,7 +104,7 @@ const GoogleContextProvider = (props) => {
     }, [navigate])
 
     return (
-        <GoogleContext.Provider value={{ flag: showLogin, userGoogle, hasAccount, userSariri, setUserSariri }}>
+        <GoogleContext.Provider value={{ flag: showLogin, userGoogle, userSariri, setUserSariri }}>
             {props.children}
         </GoogleContext.Provider>
     )

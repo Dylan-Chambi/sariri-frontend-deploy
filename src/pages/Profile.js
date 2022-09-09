@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import Cookies from 'js-cookie';
 
 
 const theme = createTheme();
@@ -60,6 +61,7 @@ export default function Profile() {
                 setMessage("Usuario actualizado correctamente");
                 const uploadDB = await api.get('/user/' + userSariri.user_id);
                 setUserSariri(uploadDB.data[0])
+                Cookies.set('saririCookie',  JSON.stringify(uploadDB.data[0]))
             }
         }).catch((err) => {
             

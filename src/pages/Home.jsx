@@ -14,7 +14,7 @@ import { GoogleContext } from "../context/googleContext";
 
  function Home() {
     const [places, setPlaces] = useState([])
-    const {flag, userSariri, userGoogle} = useContext(GoogleContext);
+    const {userSariri} = useContext(GoogleContext);
     const [autocomplete, setAutocomplete] = useState(null);
     const [coords, setCoords] = useState(null);
     const [childClicked, setChildClicked] = useState(null);
