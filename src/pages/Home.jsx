@@ -25,6 +25,7 @@ import DialogTitle from '@mui/material/DialogTitle';
     const [maxPlaces, setMaxPlaces] = useState(10);
     const [checkIn, setCheckIn] = useState(null);
     const [checkOut, setCheckOut] = useState(null);
+    const [numGuests, setNumGuests] = useState([1, 0]);
 
 
     const [open, setOpen] = React.useState(false);
@@ -90,6 +91,8 @@ import DialogTitle from '@mui/material/DialogTitle';
       <Navbar />
       <ScrollReveal>
         <Principal
+          numGuests={numGuests}
+          setNumGuests={setNumGuests}
           checkIn={checkIn}
           setCheckIn={setCheckIn}
           checkOut={checkOut}
@@ -100,6 +103,7 @@ import DialogTitle from '@mui/material/DialogTitle';
       </ScrollReveal>
       <ScrollReveal>
         <Hotels
+          numGuests={numGuests}
           checkIn={checkIn}
           checkOut={checkOut}
           maxPlaces={maxPlaces}

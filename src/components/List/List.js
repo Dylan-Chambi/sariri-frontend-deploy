@@ -39,7 +39,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-const List = ({ places, childClicked, isLoading, setPriceRange, priceRange, setMaxPlaces, maxPlaces, checkIn, checkOut }) => {
+const List = ({ places, childClicked, isLoading, setPriceRange, priceRange, setMaxPlaces, maxPlaces, checkIn, checkOut, numGuests }) => {
   const [elRefs, setElRefs] = useState([]);
   const classes = useStyles();
 
@@ -105,7 +105,7 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange, setM
             <Grid container spacing={3} className={classes.list}>
               {places?.map((place, i) => (
                 <Grid ref={elRefs[i]} key={i} item xs={12}>
-                  <PlaceDetails selected={Number(childClicked) === i} refProp={elRefs[i]} place={place} checkIn={checkIn} checkOut={checkOut} />
+                  <PlaceDetails selected={Number(childClicked) === i} refProp={elRefs[i]} place={place} checkIn={checkIn} checkOut={checkOut} numGuests={numGuests} />
                 </Grid>
               ))}
 

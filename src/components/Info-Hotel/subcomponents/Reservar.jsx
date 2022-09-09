@@ -7,9 +7,9 @@ import Huespedes from './Huespedes';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function DisableElevation({ price, checkIn, checkOut}) {
+export default function DisableElevation({ price, checkIn, checkOut, numGuests }) {
   const navigate = useNavigate();
-  const [nroHuespedes, setNroHuespedes] = useState(1);
+  const [nroHuespedes, setNroHuespedes] = useState(numGuests);
   const [nroNoches, setNroNoches] = useState(1);
 
   return (
@@ -23,7 +23,7 @@ export default function DisableElevation({ price, checkIn, checkOut}) {
         {price}$ noche
       </Typography>
       <Calendar setNroNoches={setNroNoches} checkIn={checkIn} checkOut={checkOut}/>
-      <Huespedes setNroHuespedes={setNroHuespedes}/>
+      <Huespedes nroHuespedes={nroHuespedes} setNroHuespedes={setNroHuespedes}/>
       <Box sx={{ display: 'flex', flexDirection: 'row' }}>
         <Box sx={{ backgroundColor: "#B9C7D8", display:'flex', 
         alignItems: 'center', justifyContent: 'center', borderRadius: 2, padding:1, margin: 5 }}>

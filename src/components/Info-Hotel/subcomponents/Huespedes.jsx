@@ -5,13 +5,15 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function BasicSelect({ setNroHuespedes }) {
-  const [huesped, setHuesped] = React.useState('');
+export default function BasicSelect({ nroHuespedes, setNroHuespedes }) {
 
   const handleChange = (event) => {
-    setHuesped(event.target.value);
     setNroHuespedes(event.target.value);
   };
+
+  const range = (start, end) => {
+    return Array(end - start + 1).fill().map((_, idx) => start + idx)
+  }
 
   return (
     <Box sx={{ minWidth: 120, margin: 2 }}>
@@ -20,20 +22,13 @@ export default function BasicSelect({ setNroHuespedes }) {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={huesped}
+          value={nroHuespedes}
           label="huespedes"
           onChange={handleChange}
         >
-          <MenuItem value={1}>1</MenuItem>
-          <MenuItem value={2}>2</MenuItem>
-          <MenuItem value={3}>3</MenuItem>
-          <MenuItem value={4}>4</MenuItem>
-          <MenuItem value={5}>5</MenuItem>
-          <MenuItem value={6}>6</MenuItem>
-          <MenuItem value={7}>7</MenuItem>
-          <MenuItem value={8}>8</MenuItem>
-          <MenuItem value={9}>9</MenuItem>
-          <MenuItem value={10}>10</MenuItem>
+          {range(1, 20).map((i) => (
+            <MenuItem value={i}>{i}</MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>

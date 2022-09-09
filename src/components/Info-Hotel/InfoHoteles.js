@@ -19,7 +19,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function InfoHoteles({ hotelInfo, checkIn, checkOut }) {
+export default function InfoHoteles({ hotelInfo, checkIn, checkOut, numGuests }) {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -140,7 +140,7 @@ export default function InfoHoteles({ hotelInfo, checkIn, checkOut }) {
             marginBottom: '2rem',
           }}
         >
-          <Reservar price={getMaxPrice(hotelInfo.hotel_price)} checkIn={checkIn ?? null} checkOut={checkOut ?? null} />
+          <Reservar price={getMaxPrice(hotelInfo.hotel_price)} checkIn={checkIn ?? null} checkOut={checkOut ?? null} numGuests={numGuests ?? 1} />
         </Box>
         <Divider color="#000" />
         <Box sx={{
@@ -191,4 +191,11 @@ export default function InfoHoteles({ hotelInfo, checkIn, checkOut }) {
   );
 }
 
-const getMaxPrice = (priceString) => priceString.match(/\d+/g)[1]
+const getMaxPrice = (priceString) => {
+  const prices =priceString.match(/\d+/g);
+  if(prices[1]){
+    return prices[1];
+  }else{
+    return prices[0];
+  }
+}

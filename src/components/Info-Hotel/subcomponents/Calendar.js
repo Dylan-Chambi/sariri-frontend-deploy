@@ -11,7 +11,7 @@ import { sizeHeight } from '@mui/system';
 import { useState, useEffect } from 'react';
 
 export default function BasicDateRangePicker({ setNroNoches, checkIn, checkOut }) {
-  const [value, setValue] = useState([null, null]);
+  const [value, setValue] = useState([checkIn ? new Date(`${checkIn.$d}`): null, checkOut ? new Date(`${checkOut.$d}`) : null]);
   setNroNoches(calculateNights([checkIn, checkOut]));
 
   return (
@@ -20,7 +20,7 @@ export default function BasicDateRangePicker({ setNroNoches, checkIn, checkOut }
       localeText={{ start: 'Check-in', end: 'Check-out' }}
     >
       <DateRangePicker
-        value={[new Date(`${checkIn.$d}`), new Date(`${checkOut.$d}`)]}
+        value={value}
         onChange={(newValue) => {
           setValue(newValue);
           setNroNoches(calculateNights(newValue));
@@ -47,8 +47,6 @@ const calculateNights = (dateRange) => {
 
     const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    console.log("days " + diffDays)
 
     return diffDays;
   }else return 1
