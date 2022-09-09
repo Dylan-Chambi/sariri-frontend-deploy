@@ -5,7 +5,7 @@ import { Autocomplete } from '@react-google-maps/api';
 import Select from "../components/Principal/Select";
 import Calendar from "../components/Principal/Calendar";
 import Destination from "../components/Principal/Destination";
-export default function Hero({onPlaceChanged, onLoad, showHotels}) {
+export default function Hero({onPlaceChanged, onLoad, showHotels, checkIn, setCheckIn, checkOut, setCheckOut}) {
 
   return (
     
@@ -29,7 +29,12 @@ export default function Hero({onPlaceChanged, onLoad, showHotels}) {
           </div>
           <div className="container">
             <label htmlFor="">Fecha</label>
-            <Calendar/>
+            <Calendar
+              checkIn={checkIn}
+              setCheckIn={setCheckIn}
+              checkOut={checkOut}
+              setCheckOut={setCheckOut}
+            />
           </div>
           <div className="container">
             <label htmlFor="">Adultos</label>

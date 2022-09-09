@@ -23,6 +23,8 @@ import DialogTitle from '@mui/material/DialogTitle';
     const [rating, setRating] = useState("");
     const [priceRange, setPriceRange] = useState("Todos");
     const [maxPlaces, setMaxPlaces] = useState(10);
+    const [checkIn, setCheckIn] = useState(null);
+    const [checkOut, setCheckOut] = useState(null);
 
 
     const [open, setOpen] = React.useState(false);
@@ -30,14 +32,6 @@ import DialogTitle from '@mui/material/DialogTitle';
     setOpen(false);
     setPriceRange("Todos");
   };
-  // const [open2, setOpen2] = React.useState(false);
-  // const handleClose2 = () => {
-  //   setOpen2(false);
-  // };
-  
-    // useEffect(() => {
-    //     getPlacesData().then((data) => {console.log(data); setPlaces(data)})
-    // }, [])
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -90,27 +84,24 @@ import DialogTitle from '@mui/material/DialogTitle';
     setCoords({ lat, lng });
   };
 
-  const showHotelsInConsole = () => {
-    // console.log("Start showing")
-    // console.log("-------------------------------------")
-    // places?.map((place, i) => (console.log(place)))
-    // console.log("-------------------------------------")
-    // console.log("Done showing")
-  };
-
   return (
     <>
       <ScrollToTop />
       <Navbar />
       <ScrollReveal>
         <Principal
+          checkIn={checkIn}
+          setCheckIn={setCheckIn}
+          checkOut={checkOut}
+          setCheckOut={setCheckOut}
           onPlaceChanged={onPlaceChanged}
           onLoad={onLoad}
-          showHotels={showHotelsInConsole()}
         />
       </ScrollReveal>
       <ScrollReveal>
         <Hotels
+          checkIn={checkIn}
+          checkOut={checkOut}
           maxPlaces={maxPlaces}
           setMaxPlaces={setMaxPlaces}
           coords={coords}

@@ -1,16 +1,16 @@
-import Images from '../components/Info-Hotel/imagesList';
+import Images from './subcomponents/imagesList';
 import * as React from 'react';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import FavButton from '../components/Info-Hotel/FavButton';
-import Contacts from '../components/Info-Hotel/Contacts';
-import Reservar from '../components/Info-Hotel/Reservar';
-import Navbar from '../components/Navbar';
+import FavButton from './subcomponents/FavButton';
+import Contacts from './subcomponents/Contacts';
+import Reservar from './subcomponents/Reservar';
+import Navbar from '../Navbar';
 import Divider from '@mui/material/Divider';
-import Services from '../components/Info-Hotel/Services';
-import Mapa from '../components/Info-Hotel/Mapa';
-import Comment from '../components/Info-Hotel/CommentUser';
-import Others from '../components/Info-Hotel/CommetsOthersUsers';
+import Services from './subcomponents/Services';
+import Mapa from './subcomponents/Mapa';
+import Comment from './subcomponents/CommentUser';
+import Others from './subcomponents/CommetsOthersUsers';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Grid } from '@mui/material';
@@ -19,11 +19,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function InfoHoteles() {
-  console.log('InfoHoteles');
+export default function InfoHoteles({ hotelInfo, checkIn, checkOut }) {
   const navigate = useNavigate();
-  const location = useLocation();
-  const hotelInfo = location.state.hotel_info;
 
   const [open, setOpen] = useState(false);
 
@@ -143,7 +140,7 @@ export default function InfoHoteles() {
             marginBottom: '2rem',
           }}
         >
-          <Reservar price={getMaxPrice(hotelInfo.hotel_price)} />
+          <Reservar price={getMaxPrice(hotelInfo.hotel_price)} checkIn={checkIn ?? null} checkOut={checkOut ?? null} />
         </Box>
         <Divider color="#000" />
         <Box sx={{

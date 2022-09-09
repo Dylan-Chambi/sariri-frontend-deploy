@@ -8,10 +8,11 @@ import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import { fontGrid } from '@mui/material/styles/cssUtils';
 import { responsiveFontSizes } from '@material-ui/core';
 import { sizeHeight } from '@mui/system';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function BasicDateRangePicker({ setNroNoches }) {
+export default function BasicDateRangePicker({ setNroNoches, checkIn, checkOut }) {
   const [value, setValue] = useState([null, null]);
+  setNroNoches(calculateNights([checkIn, checkOut]));
 
   return (
     <LocalizationProvider
@@ -19,17 +20,16 @@ export default function BasicDateRangePicker({ setNroNoches }) {
       localeText={{ start: 'Check-in', end: 'Check-out' }}
     >
       <DateRangePicker
-        value={value}
+        value={[new Date(`${checkIn.$d}`), new Date(`${checkOut.$d}`)]}
         onChange={(newValue) => {
           setValue(newValue);
           setNroNoches(calculateNights(newValue));
         }}
         disablePast
         renderInput={(startProps, endProps) => (
-
           <React.Fragment>
             <TextField {...startProps} />
-            <Box sx={{ mx: 2 }}> hasta </Box>
+            <Box sx={{ mx: 2 }}> to </Box>
             <TextField {...endProps} />
           </React.Fragment>
         )}
@@ -42,8 +42,8 @@ export default function BasicDateRangePicker({ setNroNoches }) {
 
 const calculateNights = (dateRange) => {
   if(dateRange[0] && dateRange[1]){
-    const startDate = new Date(`${dateRange[0].$M}/${dateRange[0].$D}/${dateRange[0].$y}`);
-    const endDate = new Date(`${dateRange[1].$M}/${dateRange[1].$D}/${dateRange[1].$y}`);
+    const startDate = new Date(`${dateRange[0].$d}`);
+    const endDate = new Date(`${dateRange[1].$d}`);
 
     const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));

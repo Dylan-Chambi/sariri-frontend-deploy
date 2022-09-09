@@ -9,8 +9,7 @@ import { fontGrid } from '@mui/material/styles/cssUtils';
 import { responsiveFontSizes } from '@material-ui/core';
 import { sizeHeight } from '@mui/system';
 
-export default function BasicDateRangePicker() {
-  const [value, setValue] = React.useState([null, null]);
+export default function BasicDateRangePicker({ checkIn, checkOut, setCheckIn, setCheckOut }) {
 
   return (
     <LocalizationProvider
@@ -18,10 +17,11 @@ export default function BasicDateRangePicker() {
       localeText={{ start: 'Check-in', end: 'Check-out'}}
     >
       <DateRangePicker
-        value={value}
+        value={[checkIn, checkOut]}
         onChange={(newValue) => {
-          setValue(newValue);
-          console.log(newValue)
+          setCheckOut(newValue[1]);
+          setCheckIn(newValue[0]);
+          console.log("Calendar", newValue);
         }}
       disablePast
         renderInput={(startProps, endProps) => (

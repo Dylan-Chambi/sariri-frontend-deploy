@@ -4,11 +4,11 @@ import { Box, Typography, Button, Card, CardMedia, CardContent, CardActions, Chi
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PhoneIcon from '@material-ui/icons/Phone';
 import Rating from '@material-ui/lab/Rating';
-import FavButton from '../Info-Hotel/FavButton';
+import FavButton from '../Info-Hotel/subcomponents/FavButton';
 import useStyles from './styles.js';
 import { Link } from 'react-router-dom';
 
-const PlaceDetails = ({ place, selected, refProp }) => {
+const PlaceDetails = ({ place, selected, refProp, checkIn, checkOut }) => {
   const [pricePerNight, setPricePerNight] = useState("")
 
 const priceSubstring = (place.hotel_price)?.length < 7 ? (place.hotel_price) : (place.hotel_price)?.length === 7 ? (place.hotel_price).substring(3, (place.hotel_price).length) : (place.hotel_price)?.length === 8 ? (place.hotel_price).substring(4, (place.hotel_price).length)
@@ -31,7 +31,7 @@ const priceSubstring = (place.hotel_price)?.length < 7 ? (place.hotel_price) : (
       />
       <CardContent>
         <Typography gutterBottom variant="h5">
-          <Link to='/hotel-info' state={{hotel_info: place}} style={{ textDecoration: 'none', color: 'black' }}>
+          <Link to='/hotel-info' state={{hotel_info: place, check_in: checkIn, check_out: checkOut}} style={{textDecoration: 'none', color: 'black'}}>
             {place.hotel_name}
           </Link>
           </Typography>

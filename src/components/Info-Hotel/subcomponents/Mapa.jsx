@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import GoogleMapReact from 'google-map-react';
-import mapStyles from '../Map/mapStyles';
+import mapStyles from '../../Map/mapStyles';
 export default function Mapa({ coords }) {
     return (
         <Box bgcolor={'#1c74d4'} marginLeft="10" sx={{
