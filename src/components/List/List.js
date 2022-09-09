@@ -39,7 +39,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-const List = ({ places, childClicked, isLoading, setPriceRange, priceRange }) => {
+const List = ({ places, childClicked, isLoading, setPriceRange, priceRange, setMaxPlaces, maxPlaces }) => {
   const [elRefs, setElRefs] = useState([]);
   const classes = useStyles();
 
@@ -59,7 +59,6 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange }) =>
 
       >
         <Typography variant="h4">Encuentra tu hotel!</Typography>
-        <Typography variant="h7">Selecciona el precio que deseas</Typography>
         {isLoading ? (
           <div className={classes.loading}>
             <CircularProgress size="5rem" color='#fff' />
@@ -68,17 +67,38 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange }) =>
           <>
 
             <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={4}>
-              <FormControl fullWidth>
+              <Box display="flex" alignItems="center" marginRight={4} flexDirection="column" fullWidth>
+                <Typography variant="h7">Rango de Precio</Typography>
+                <FormControl fullWidth>
+                  <Select id="demo-simple-select-label" value={priceRange} onChange={(e) => setPriceRange(e.target.value)}
+                    input={<BootstrapInput />}>
+                    <MenuItem value="Todos">Todos</MenuItem>
+                    <MenuItem value="$">$</MenuItem>
+                    <MenuItem value="$$">$$</MenuItem>
+                    <MenuItem value="$$$">$$$</MenuItem>
+                    <MenuItem value="$$$$">$$$$</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
 
-                <Select id="demo-simple-select-label" value={priceRange} onChange={(e) => setPriceRange(e.target.value)}
-                  input={<BootstrapInput />}>
-                  <MenuItem value="Todos">Todos</MenuItem>
-                  <MenuItem value="$">$</MenuItem>
-                  <MenuItem value="$$">$$</MenuItem>
-                  <MenuItem value="$$$">$$$</MenuItem>
-                  <MenuItem value="$$$$">$$$$</MenuItem>
-                </Select>
-              </FormControl>
+              <Box display="flex" alignItems="center" flexDirection="column" fullWidth>
+                <Typography variant="h7">Limite de resultados</Typography>
+                <FormControl fullWidth>
+                  <Select id="demo-simple-select-label" value={maxPlaces} onChange={(e) => {
+                    console.log(e.target.value);
+                    setMaxPlaces(e.target.value)
+                  }}
+                    input={<BootstrapInput />}>
+                    <MenuItem value={10}>10</MenuItem>
+                    <MenuItem value={20}>20</MenuItem>
+                    <MenuItem value={30}>30</MenuItem>
+                    <MenuItem value={40}>40</MenuItem>
+                    <MenuItem value={50}>50</MenuItem>
+                    <MenuItem value={100}>100</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+
               <InformationButton />
 
             </Box>
@@ -88,7 +108,7 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange }) =>
                   <PlaceDetails selected={Number(childClicked) === i} refProp={elRefs[i]} place={place} />
                 </Grid>
               ))}
-              
+
             </Grid>
           </>
 

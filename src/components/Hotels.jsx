@@ -4,12 +4,14 @@ import Map from "./Map/Map";
 import Grid from "@mui/material/Grid";
 import List from "./List/List";
 
-export default function Hotels({setChildClicked, setBounds, setCoords, coords, filteredPlaces, places, priceRange, setPriceRange, isLoading, childClicked}) {
+export default function Hotels({setChildClicked, setBounds, setCoords, coords, filteredPlaces, places, priceRange, setPriceRange, isLoading, childClicked, maxPlaces, setMaxPlaces}) {
     return(
 
     <Grid id="hotels" container spacing={3} style={{ width: '100%' }}>
         <Grid item xs={12} md={4}>
             <List
+                maxPlaces={maxPlaces}
+                setMaxPlaces={setMaxPlaces}
                 isLoading={isLoading}
                 childClicked={childClicked}
                 places={filteredPlaces.length ? filteredPlaces : places}

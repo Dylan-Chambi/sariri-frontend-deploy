@@ -22,6 +22,7 @@ import DialogTitle from '@mui/material/DialogTitle';
     const [isLoading, setIsLoading] = useState(false);
     const [rating, setRating] = useState("");
     const [priceRange, setPriceRange] = useState("Todos");
+    const [maxPlaces, setMaxPlaces] = useState(10);
 
 
     const [open, setOpen] = React.useState(false);
@@ -54,7 +55,6 @@ import DialogTitle from '@mui/material/DialogTitle';
   useEffect(() => {
     const filtered = places.filter(
       (place) => {
-        console.log("priceRange", place.price_level);
         return place.price_level === priceRange
       }
     );
@@ -69,7 +69,7 @@ import DialogTitle from '@mui/material/DialogTitle';
     if (bounds) {
       setIsLoading(true);
 
-      getPlacesData(bounds.sw, bounds.ne).then((data) => {
+      getPlacesData(bounds.sw, bounds.ne, maxPlaces).then((data) => {
         setPlaces(data);
         setFilteredPlaces([]);
         setRating("");
@@ -79,7 +79,7 @@ import DialogTitle from '@mui/material/DialogTitle';
         console.log(error);
       });
     }
-  }, [bounds]);
+  }, [bounds, maxPlaces]);
 
   const onLoad = (autoC) => setAutocomplete(autoC);
 
@@ -111,6 +111,8 @@ import DialogTitle from '@mui/material/DialogTitle';
       </ScrollReveal>
       <ScrollReveal>
         <Hotels
+          maxPlaces={maxPlaces}
+          setMaxPlaces={setMaxPlaces}
           coords={coords}
           places={places}
           filteredPlaces={filteredPlaces}

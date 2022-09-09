@@ -36,7 +36,7 @@ const priceSubstring = (place.hotel_price)?.length < 7 ? (place.hotel_price) : (
           </Link>
           </Typography>
         <Box display="flex" justifyContent="space-between" my={2}>
-          <Rating name="read-only" value={Number(place.hotel_rating)} readOnly />
+          <Rating name="read-only" value={place.hotel_rating} readOnly precision={0.1} />
           <Typography component="legend">{place.num_reviews} reseña{place.num_reviews > 1 && 's'}</Typography>
         </Box>
         <Box display="flex" justifyContent="space-between">
@@ -51,8 +51,8 @@ const priceSubstring = (place.hotel_price)?.length < 7 ? (place.hotel_price) : (
             {place.hotel_ranking}
           </Typography>
         </Box>
-        {place?.awards?.map((award) => (
-          <Box display="flex" justifyContent="space-between" my={1} alignItems="center">
+        {place?.awards?.map((award, index) => (
+          <Box display="flex" justifyContent="space-between" my={1} alignItems="center" key={index}>
             <img src={award.badge_url} alt={award.display_name} />
             <Typography variant="subtitle2" color="textSecondary">{award.display_name}</Typography>
           </Box>

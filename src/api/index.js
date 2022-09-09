@@ -2,20 +2,25 @@ import axios from 'axios';
 
 const rapidApiKey = "e9abf265a8mshae4ec8f735d80dfp1946d1jsn2d0facf31a14";
 
-export const getPlacesData = async (sw, ne) => {
+export const getPlacesData = async (sw, ne, maxPlaces) => {
+    console.log("getPlacesData API CALLED");
     try {
         const data = await axios.post(`http://localhost:4000/api/hotel-list`,
             {
                 bl_latitude: sw.lat,
                 bl_longitude: sw.lng,
                 tr_longitude: ne.lng,
-                tr_latitude: ne.lat
+                tr_latitude: ne.lat,
+                max_places: maxPlaces
             });
-            console.log(data);
+        console.log("getPlacesData API RESPONSE");
         return data.data;
     } catch (error) {
+        console.log("getPlacesData API ERROR");
         console.log(error);
     }
+    console.log("getPlacesData API FINISHED");
+
 };
 
 export const getHotelInfo = async (hotel_id) => {
