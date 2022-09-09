@@ -5,12 +5,12 @@ export default function Services({ serviceList }) {
     console.log(serviceList)
     return (
         <Box sx={{
-            marginLeft: '16rem',
+            marginLeft: '5rem',
             marginBottom: '5rem',
         }}>
             {serviceList.map((service) => {
                 return (
-                    <Typography key={1} sx={{ fontSize: 14, mt: 2, fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+                    <Typography key={1} sx={{ fontSize: 20, mt: 2, fontWeight: 'bold', display: 'flex', }}>
                         <Icon sx={{ marginRight: 1.5 }} color='primary'>{service.icon_name}</Icon> {service.service_name}
                     </Typography>
                 )

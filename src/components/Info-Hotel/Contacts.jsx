@@ -6,11 +6,14 @@ import PlaceIcon from '@mui/icons-material/Place';
 
 export default function contacts({ location_string, phone_number }) {
   return (
-    <Box>
-        <Typography sx={{fontSize: 25 , margin: 0}}>
+    <Box sx={{
+      marginLeft: '5rem',
+      marginBottom: '5rem',
+  }}>
+        <Typography sx={{ fontSize: 20, mt: 2, fontWeight: 'bold', display: 'flex', }}>
         <PlaceIcon color='primary'/> {location_string}
 </Typography>
-      <Typography sx={{fontSize: 18 , margin: 0}} >
+      <Typography sx={{ fontSize: 20, mt: 2, fontWeight: 'bold', display: 'flex', }} >
       <CallIcon color='primary'/> {phone_number}
         </Typography>
     </Box>
