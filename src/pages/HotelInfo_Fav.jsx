@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import InfoHoteles from '../components/Info-Hotel/InfoHoteles';
 
@@ -25,8 +24,9 @@ export default function HotelInfo_Fav({ isFav }) {
     }, []);
 
     return (
-        <div>
-            <InfoHoteles hotelInfo={hotelInfo} checkIn={checkIn} checkOut={checkOut} numGuests={numGuests} />
-        </div>
+        <>
+            {isFav ? <InfoHoteles hotelInfo={hotelInfo} /> 
+            : <InfoHoteles hotelInfo={hotelInfo} checkIn={checkIn} checkOut={checkOut} numGuests={numGuests} />}
+        </>
     )
 }

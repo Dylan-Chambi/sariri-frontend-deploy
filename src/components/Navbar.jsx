@@ -1,14 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { VscChromeClose } from "react-icons/vsc";
 import { Link, useNavigate } from "react-router-dom";
 import { Avatar, Button, Typography } from "@mui/material";
 import { GoogleContext } from "../context/googleContext";
 import { Box } from "@mui/system";
 export default function Navbar() {
-  const [navbarState, setNavbarState] = useState(false);
+  // const [navbarState, setNavbarState] = useState(false);
   const navigate = useNavigate()
 
 
@@ -21,13 +19,6 @@ export default function Navbar() {
           <div className="container">
             <img src={logo} alt="" />
             Sariri
-          </div>
-          <div className="toggle">
-            {navbarState ? (
-              <VscChromeClose onClick={() => setNavbarState(false)} />
-            ) : (
-              <GiHamburgerMenu onClick={() => setNavbarState(true)} />
-            )}
           </div>
         </div>
 

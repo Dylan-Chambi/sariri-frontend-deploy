@@ -12,7 +12,7 @@ import { GoogleContext } from '../../context/googleContext';
 const PlaceDetails = ({ place, selected, refProp, checkIn, checkOut, numGuests }) => {
   const { userSariri : { user_id }} = useContext(GoogleContext);
   const [pricePerNight, setPricePerNight] = useState("")
-
+  
 const priceSubstring = (place.hotel_price)?.length < 7 ? (place.hotel_price) : (place.hotel_price)?.length === 7 ? (place.hotel_price).substring(3, (place.hotel_price).length) : (place.hotel_price)?.length === 8 ? (place.hotel_price).substring(4, (place.hotel_price).length)
     : (place.hotel_price)?.length === 9 ? (place.hotel_price).substring(5, (place.hotel_price).length) : (place.hotel_price)?.length === 10 ? (place.hotel_price).substring(6, (place.hotel_price).length) : (place.hotel_price)?.substring(7, (place.hotel_price).length)
  
