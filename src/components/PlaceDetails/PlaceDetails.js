@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useState } from 'react'
 import { Box, Typography, Button, Card, CardMedia, CardContent, CardActions, Chip } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -7,8 +7,10 @@ import Rating from '@material-ui/lab/Rating';
 import FavButton from '../Info-Hotel/subcomponents/FavButton';
 import useStyles from './styles.js';
 import { Link } from 'react-router-dom';
+import { GoogleContext } from '../../context/googleContext';
 
 const PlaceDetails = ({ place, selected, refProp, checkIn, checkOut, numGuests }) => {
+  const { userSariri : { user_id }} = useContext(GoogleContext);
   const [pricePerNight, setPricePerNight] = useState("")
 
 const priceSubstring = (place.hotel_price)?.length < 7 ? (place.hotel_price) : (place.hotel_price)?.length === 7 ? (place.hotel_price).substring(3, (place.hotel_price).length) : (place.hotel_price)?.length === 8 ? (place.hotel_price).substring(4, (place.hotel_price).length)
@@ -73,7 +75,7 @@ const priceSubstring = (place.hotel_price)?.length < 7 ? (place.hotel_price) : (
       </CardContent>
       <CardActions justifyContent='right'>
         <Button size="small" color="primary" onClick={() => { }}>
-          <FavButton/>
+          <FavButton isFavorite={place.isFavorite} location_id={place.location_id} user_id={user_id} />
         </Button>
       </CardActions>
     </Card>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getPlacesData } from "../api";
 import Footer from "../components/Footer";
 import Principal from "../components/Principal";
@@ -10,10 +10,11 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import { GoogleContext } from "../context/googleContext";
 
  function Home() {
     const [places, setPlaces] = useState([])
-    //const {flag, userSariri} = useContext(GoogleContext)
+    const {flag, userSariri, userGoogle} = useContext(GoogleContext);
     const [autocomplete, setAutocomplete] = useState(null);
     const [coords, setCoords] = useState(null);
     const [childClicked, setChildClicked] = useState(null);
@@ -64,8 +65,9 @@ import DialogTitle from '@mui/material/DialogTitle';
   useEffect(() => {
     if (bounds) {
       setIsLoading(true);
-      getPlacesData(bounds.sw, bounds.ne, maxPlaces).then((data) => {
+      getPlacesData(bounds.sw, bounds.ne, maxPlaces, userSariri?.user_id).then(data => {
         setPlaces(data.data ?? []);
+        //console.log(data.data);
         setIsAPIError(false);
       }).catch((error) => {
         setIsAPIError(true);
@@ -75,7 +77,7 @@ import DialogTitle from '@mui/material/DialogTitle';
         setIsLoading(false);
       });
     }
-  }, [bounds, maxPlaces]);
+  }, [bounds, maxPlaces, userSariri]);
 
   const onLoad = (autoC) => setAutocomplete(autoC);
 

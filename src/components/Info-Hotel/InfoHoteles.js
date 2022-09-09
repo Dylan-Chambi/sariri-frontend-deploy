@@ -11,16 +11,19 @@ import Services from './subcomponents/Services';
 import Mapa from './subcomponents/Mapa';
 import Comment from './subcomponents/CommentUser';
 import Others from './subcomponents/CommetsOthersUsers';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useContext } from 'react';
+import { GoogleContext } from '../../context/googleContext';
 
 export default function InfoHoteles({ hotelInfo, checkIn, checkOut, numGuests }) {
   const navigate = useNavigate();
+  const { userSariri: { user_id } } = useContext(GoogleContext);
 
   const [open, setOpen] = useState(false);
 
@@ -74,7 +77,7 @@ export default function InfoHoteles({ hotelInfo, checkIn, checkOut, numGuests })
 
               </Grid>
               <Grid item xs={2} md={2} alignSelf='center'>
-                <FavButton />
+                <FavButton isFavorite={hotelInfo.isFavorite} user_id={user_id} location_id={hotelInfo.location_id} />
               </Grid>
             </Grid>
 
