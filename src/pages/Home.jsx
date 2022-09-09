@@ -26,12 +26,14 @@ import DialogTitle from '@mui/material/DialogTitle';
     const [checkIn, setCheckIn] = useState(null);
     const [checkOut, setCheckOut] = useState(null);
     const [numGuests, setNumGuests] = useState([1, 0]);
+    const [ isAPIError, setIsAPIError ] = useState(false);
 
 
     const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
     setPriceRange("Todos");
+    setIsAPIError(false);
   };
 
   useEffect(() => {
@@ -57,21 +59,20 @@ import DialogTitle from '@mui/material/DialogTitle';
       setOpen(true);
     }
     setFilteredPlaces(filtered);
-    console.log(filtered);
   }, [priceRange, places]);
 
   useEffect(() => {
     if (bounds) {
       setIsLoading(true);
-
       getPlacesData(bounds.sw, bounds.ne, maxPlaces).then((data) => {
-        setPlaces(data);
-        setFilteredPlaces([]);
+        setPlaces(data.data ?? []);
+        setIsAPIError(false);
+      }).catch((error) => {
+        setIsAPIError(true);
+      }).finally(() => {
         setRating("");
         setPriceRange("Todos");
         setIsLoading(false);
-      }).catch((error) => {
-        console.log(error);
       });
     }
   }, [bounds, maxPlaces]);
@@ -129,6 +130,22 @@ import DialogTitle from '@mui/material/DialogTitle';
       >
         <DialogTitle id="alert-dialog-title">
           {"Lo sentimos, no se encontraron lugares de acuerdo al filtro seleccionado."}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={isAPIError}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Lo sentimos, no se pudo obtener la información de los lugares."}
         </DialogTitle>
         <DialogActions>
           <Button onClick={handleClose} autoFocus>

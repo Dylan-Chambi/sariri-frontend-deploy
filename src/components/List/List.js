@@ -45,7 +45,6 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange, setM
 
   useEffect(() => {
     setElRefs((refs) => Array(places.length).fill().map((_, i) => refs[i] || createRef()));
-    console.log(places);
   }, [places]);
   return (
     <div className={classes.container}>
@@ -85,7 +84,6 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange, setM
                 <Typography variant="h7">Limite de resultados</Typography>
                 <FormControl fullWidth>
                   <Select id="demo-simple-select-label" value={maxPlaces} onChange={(e) => {
-                    console.log(e.target.value);
                     setMaxPlaces(e.target.value)
                   }}
                     input={<BootstrapInput />}>

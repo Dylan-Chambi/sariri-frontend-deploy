@@ -3,7 +3,10 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import GoogleMapReact from 'google-map-react';
 import mapStyles from '../../Map/mapStyles';
+import useStyles from '../../Map/styles.js';
+
 export default function Mapa({ coords }) {
+    const classes = useStyles();
     return (
         <Box bgcolor={'#1c74d4'} marginLeft="10" sx={{
             padding: '15px',
@@ -24,8 +27,9 @@ export default function Mapa({ coords }) {
                     margin={[50, 50, 50, 50]}
                     options={{ disableDefaultUI: true, zoomControl: true, styles: mapStyles }}>
                     <Box
-                        lat={coords.lat}
-                        lng={coords.lng}>
+                        className={classes.markerContainer}
+                        lat={Number(coords.lat)}
+                        lng={Number(coords.lng)}>
                         <img
                             height="50px"
                             width="50px"

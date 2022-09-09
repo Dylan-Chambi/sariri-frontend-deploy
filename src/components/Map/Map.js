@@ -6,11 +6,13 @@ import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import mapStyles from './mapStyles';
 import useStyles from './styles.js';
 import { Box } from '@mui/system';
+import { useState } from 'react';
 
 const Map = ({ coords, places, setCoords, setBounds, setChildClicked }) => {
     const matches = useMediaQuery('(min-width:600px)');
     const classes = useStyles();
 
+    const [wasClicked, setWasClicked] = useState(false);
 
     return (
         <div className={classes.mapContainer}>
@@ -22,10 +24,17 @@ const Map = ({ coords, places, setCoords, setBounds, setChildClicked }) => {
                 
                 options={{ disableDefaultUI: true, zoomControl: true, styles: mapStyles }}
                 onChange={(e) => {
-                    setCoords({ lat: e.center.lat, lng: e.center.lng });
-                    setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
+                    if (!wasClicked) {
+                        setCoords({ lat: e.center.lat, lng: e.center.lng });
+                        setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
+                    }
+                    setWasClicked(false);
                 }}
-                onChildClick={(child) => setChildClicked(child)}
+                onChildClick={(childkey, childProps) => {
+                    setWasClicked(true);
+                    setChildClicked(childkey);
+                    setCoords({ lat: childProps.lat, lng: childProps.lng });
+                }}
             >
                 {places.length && places.map((place, i) => (
                     <Box

@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import InfoHoteles from '../components/Info-Hotel/InfoHoteles';
 
@@ -9,9 +11,6 @@ export default function HotelInfo_Fav({ isFav }) {
     let checkOut;
     let numGuests;
 
-
-    console.log(location.state);
-
     if (isFav) {
         hotelInfo = location.state.hotel_fav;
     } else {
@@ -20,6 +19,10 @@ export default function HotelInfo_Fav({ isFav }) {
         checkOut = location.state.check_out;
         numGuests = location.state.num_guests[0] + location.state.num_guests[1];
     }
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <div>
