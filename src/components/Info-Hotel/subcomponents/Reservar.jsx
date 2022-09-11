@@ -6,11 +6,29 @@ import Calendar from './Calendar';
 import Huespedes from './Huespedes';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default function DisableElevation({ price, checkIn, checkOut, numGuests }) {
   const navigate = useNavigate();
   const [nroHuespedes, setNroHuespedes] = useState(numGuests);
   const [nroNoches, setNroNoches] = useState(1);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Box sx={{
@@ -33,10 +51,27 @@ export default function DisableElevation({ price, checkIn, checkOut, numGuests }
         </Box>
         <Button variant="contained" padding={10} sx={{ margin: 5, width: '100px', height: '50px',
         fontSize: 18, fontWeight: 'bold', backgroundColor: "#1c74d4", color: 'white' , borderRadius: 2, 
-      }} onClick={() => navigate('/book')}>
+      }} onClick={handleClickOpen}>
           RESERVAR
         </Button>
       </Box>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Su reserva fue realizada exitosamente!"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Comuniquese con el hotel para confirmar su reserva.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>OK</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

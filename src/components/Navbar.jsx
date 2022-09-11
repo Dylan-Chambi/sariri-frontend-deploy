@@ -12,6 +12,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import Divider from '@mui/material/Divider';
 import Logout from '@mui/icons-material/Logout';
 import ListItemIcon from '@mui/material/ListItemIcon';
+
 export default function Navbar() {
   // const [navbarState, setNavbarState] = useState(false);
   const navigate = useNavigate()
@@ -175,42 +176,3 @@ const Nav = styled.nav`
     }
   }
 `;
-
-// const ResponsiveNav = styled.div`
-//   display: flex;
-//   position: absolute;
-//   z-index: 1;
-//   top: ${({ state }) => (state ? "50px" : "-400px")};
-//   background-color: white;
-//   height: 30vh;
-//   width: 100%;
-//   align-items: center;
-//   transition: 0.3s ease-in-out;
-//   ul {
-//     list-style-type: none;
-//     width: 100%;
-//     li {
-//       width: 100%;
-//       margin: 1rem 0;
-//       margin-left: 2rem;
-
-//       a {
-//         text-decoration: none;
-//         color: #0077b6;
-//         font-size: 1.2rem;
-//         fontFamily: "Roboto", sans-serif;
-//         transition: 0.1s ease-in-out;
-//         &:hover {
-//           color: #023e8a;
-//         }
-//       }
-//       &:first-of-type {
-//         a {
-//           color: #023e8a;
-//           font-weight: 900;
-//           fontFamily: "Roboto", sans-serif;
-//         }
-//       }
-//     }
-//   }
-// `;

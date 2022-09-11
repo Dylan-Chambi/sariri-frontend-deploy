@@ -2,7 +2,6 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import Home from "./pages/Home";
 import SignInUp from "./pages/SignIn-Up";
 import Profile from "./pages/Profile";
-import Book from "./pages/Book";
 import Favorites from "./pages/Favorites";
 import HotelInfoFav from './pages/HotelInfo_Fav';
 import { useContext } from 'react';
@@ -37,7 +36,6 @@ export default function App() {
                     <HotelInfoFav isFav={true} />
                 </GuardedRoute>
             } />
-            <Route path="/book" element={<Book />} />
             <Route path="/*" element={<Navigate replace to="/home" />} />
             <Route path="/favs" element={
                 <GuardedRoute condition={userSariri && userGoogle} redirectTo="/sign-in" >
