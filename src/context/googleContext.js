@@ -19,9 +19,14 @@ const loadScript = (src) =>
 
 
 const GoogleContextProvider = (props) => {
-    const [userGoogle, setUserGoogle] = useState(null)
-    const [userSariri, setUserSariri] = useState(null)
-    const [showLogin, setShowLogin] = useState(true)
+
+    const googleToken = Cookies.get('googleToken')
+    const saririCookie = JSON.parse(Cookies.get('saririCookie') ?? null)
+    const googleSrc = 'https://accounts.google.com/gsi/client'
+
+    const [userGoogle, setUserGoogle] = useState(googleToken ? jwt_decode(googleToken) : null)
+    const [userSariri, setUserSariri] = useState(saririCookie ? saririCookie : null)
+    const [showLogin, setShowLogin] = useState(!(googleToken && saririCookie) ? true : false)
     const navigate = useNavigate();
 
     // const handleSignOut = (event) => {
@@ -38,18 +43,7 @@ const GoogleContextProvider = (props) => {
     }
 
     useEffect(() => {
-        const googleToken = Cookies.get('googleToken')
-        const saririCookie = JSON.parse(Cookies.get('saririCookie') ?? null)
-        
-        const googleSrc = 'https://accounts.google.com/gsi/client'
-
-        if (googleToken && saririCookie) {
-            const decoded = jwt_decode(googleToken)
-            setUserGoogle(decoded)
-            setUserSariri(saririCookie)
-            setShowLogin(false)
-        } else {
-
+        if (!(userGoogle && userSariri)) {
             const handleCallbackResponse = async (response) => {
                 var userObject = jwt_decode(response.credential)
                 setUserGoogle(userObject)
@@ -101,7 +95,7 @@ const GoogleContextProvider = (props) => {
             if (scriptTag) scriptTag.remove()
         }
 
-    }, [navigate])
+    }, [navigate, userGoogle, userSariri])
 
     return (
         <GoogleContext.Provider value={{ flag: showLogin, userGoogle, userSariri, setUserSariri }}>

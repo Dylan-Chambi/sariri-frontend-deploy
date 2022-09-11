@@ -23,7 +23,8 @@ import { GoogleContext } from '../../context/googleContext';
 
 export default function InfoHoteles({ hotelInfo, checkIn, checkOut, numGuests }) {
   const navigate = useNavigate();
-  const { userSariri: { user_id } } = useContext(GoogleContext);
+  const { userSariri } = useContext(GoogleContext);
+  const user_id = userSariri?.user_id;
 
   const [open, setOpen] = useState(false);
 
