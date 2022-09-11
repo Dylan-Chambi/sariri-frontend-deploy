@@ -143,7 +143,7 @@ export default function InfoHoteles({ hotelInfo, checkIn, checkOut, numGuests })
             marginBottom: '2rem',
           }}
         >
-          <Reservar price={getMaxPrice(hotelInfo.hotel_price)} checkIn={checkIn ?? null} checkOut={checkOut ?? null} numGuests={numGuests ?? 1} />
+          <Reservar price={getMaxPrice(hotelInfo.hotel_price)} checkIn={checkIn ?? null} checkOut={checkOut ?? null} numGuests={numGuests ?? ''} />
         </Box>
         <Divider color="#000" />
         <Box sx={{
