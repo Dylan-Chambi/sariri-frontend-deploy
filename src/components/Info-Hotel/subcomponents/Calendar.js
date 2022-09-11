@@ -5,10 +5,7 @@ import Box from '@mui/material/Box';
 import { LocalizationProvider } from '@mui/x-date-pickers-pro';
 import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { fontGrid } from '@mui/material/styles/cssUtils';
-import { responsiveFontSizes } from '@material-ui/core';
-import { sizeHeight } from '@mui/system';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function BasicDateRangePicker({ setNroNoches, checkIn, checkOut }) {
   const [value, setValue] = useState([checkIn ? new Date(`${checkIn.$d}`): null, checkOut ? new Date(`${checkOut.$d}`) : null]);

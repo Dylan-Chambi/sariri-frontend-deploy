@@ -60,14 +60,13 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange, setM
         <Typography variant="h4">Encuentra tu hotel!</Typography>
         {isLoading ? (
           <div className={classes.loading}>
-            <CircularProgress size="5rem" color='#fff' />
+            <CircularProgress size="5rem" color='inherit' />
           </div>
         ) : (
           <>
-
             <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={4}>
-              <Box display="flex" alignItems="center" marginRight={4} flexDirection="column" fullWidth>
-                <Typography variant="h7">Rango de Precio</Typography>
+              <Box display="flex" alignItems="center" marginRight={4} flexDirection="column" >
+                <Typography variant="h6">Rango de Precio</Typography>
                 <FormControl fullWidth>
                   <Select id="demo-simple-select-label" value={priceRange} onChange={(e) => setPriceRange(e.target.value)}
                     input={<BootstrapInput />}>
@@ -80,8 +79,8 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange, setM
                 </FormControl>
               </Box>
 
-              <Box display="flex" alignItems="center" flexDirection="column" fullWidth>
-                <Typography variant="h7">Limite de resultados</Typography>
+              <Box display="flex" alignItems="center" flexDirection="column" >
+                <Typography variant="h6">Limite de resultados</Typography>
                 <FormControl fullWidth>
                   <Select id="demo-simple-select-label" value={maxPlaces} onChange={(e) => {
                     setMaxPlaces(e.target.value)

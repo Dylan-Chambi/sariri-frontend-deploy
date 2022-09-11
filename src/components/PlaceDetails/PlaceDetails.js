@@ -10,7 +10,8 @@ import { Link } from 'react-router-dom';
 import { GoogleContext } from '../../context/googleContext';
 
 const PlaceDetails = ({ place, selected, refProp, checkIn, checkOut, numGuests }) => {
-  const { userSariri : { user_id }} = useContext(GoogleContext);
+  const { userSariri } = useContext(GoogleContext);
+  const user_id = userSariri?.user_id;
   const [pricePerNight, setPricePerNight] = useState("")
   
 const priceSubstring = (place.hotel_price)?.length < 7 ? (place.hotel_price) : (place.hotel_price)?.length === 7 ? (place.hotel_price).substring(3, (place.hotel_price).length) : (place.hotel_price)?.length === 8 ? (place.hotel_price).substring(4, (place.hotel_price).length)

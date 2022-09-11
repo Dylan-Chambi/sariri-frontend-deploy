@@ -16,7 +16,7 @@ export default function Footer() {
           <a href="/map">Mapa</a>
         </li>
         <li>
-          <a href="/profile" element={<Profile/>}>Perfil</a>
+          <a href="/profile">Perfil</a>
         </li>
       </ul>
     </FooterContainer>
