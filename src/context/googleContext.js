@@ -3,9 +3,12 @@ import jwt_decode from 'jwt-decode'
 import { useNavigate } from "react-router-dom";
 import { api } from '../api'
 import Cookies from 'js-cookie';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export const GoogleContext = createContext()
-
 // Se carga el script de google como promesa para que la variable "google" se cargue antes de usarla
 const loadScript = (src) =>
     new Promise((resolve, reject) => {
@@ -19,7 +22,11 @@ const loadScript = (src) =>
 
 
 const GoogleContextProvider = (props) => {
+    const [open, setOpen] = React.useState(false);
 
+    const handleClose = () => {
+        setOpen(false);
+    };
     const googleToken = Cookies.get('googleToken')
     const saririCookie = JSON.parse(Cookies.get('saririCookie') ?? null)
     const googleSrc = 'https://accounts.google.com/gsi/client'
@@ -62,7 +69,7 @@ const GoogleContextProvider = (props) => {
                     setShowLogin(false)
                     hideButton()
                 }).catch(() => {
-                    alert("Error checking in database")
+                    setOpen(true)
                 })
             }
 
@@ -100,6 +107,21 @@ const GoogleContextProvider = (props) => {
     return (
         <GoogleContext.Provider value={{ flag: showLogin, userGoogle, userSariri, setUserSariri }}>
             {props.children}
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"No se pudo registrar el usuario correcamente, vuelva a intentarlo."}
+                </DialogTitle>
+                <DialogActions>
+                    <Button onClick={handleClose} autoFocus>
+                        OK
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </GoogleContext.Provider>
     )
 }

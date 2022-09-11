@@ -5,13 +5,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { Avatar, Button, Typography } from "@mui/material";
 import { GoogleContext } from "../context/googleContext";
 import { Box } from "@mui/system";
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import PhoneIcon from '@mui/icons-material/Phone';
+import EmailIcon from '@mui/icons-material/Email';
+import Divider from '@mui/material/Divider';
+import Logout from '@mui/icons-material/Logout';
+import ListItemIcon from '@mui/material/ListItemIcon';
 export default function Navbar() {
   // const [navbarState, setNavbarState] = useState(false);
   const navigate = useNavigate()
 
-
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const { flag, userSariri } = useContext(GoogleContext);
-
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
       <Nav>
@@ -36,17 +48,50 @@ export default function Navbar() {
             <Link to="/profile" >Perfil</Link>
           </li>
         </ul>
-        {!flag ? 
-        <Box sx={{ display: 'flex', alignItems:"center", justifyContent:"center", m: 2 }}>
-        <Typography>{userSariri.user_name + " " + userSariri.user_lastName}</Typography>
-        <Avatar alt={userSariri.user_name + " " + userSariri.user_lastName} sx={{ml: 1.5, bgcolor: '#023e8a'}}>
-          {/* {userSariri.user_name[0]} */}
-        </Avatar>
-        </Box>
-        : <Box>
-          <Button sx={{ mr: 1 }} onClick={() => navigate('/sign-in')} >Login</Button>
-          <Button sx={{ mr: 1 }} onClick={() => navigate('/sign-up')} >Registrarse</Button>
-        </Box>}
+        {!flag ?
+          <Box sx={{ display: 'flex', alignItems: "center", justifyContent: "center", m: 2 }}>
+            <Typography>{userSariri.user_name + " " + userSariri.user_lastName}</Typography>
+            <Avatar onClick={handleMenu} alt={userSariri.user_name + " " + userSariri.user_lastName} sx={{ ml: 1.5, bgcolor: '#023e8a' }}>
+            </Avatar>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              sx={{ bgcolor: '#0000006f' }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <Box sx={{ display: "flex", flexDirection: "column", alignItems: "left", justifyContent: "left", p: 2 }}>
+                <Box sx={{ display: "flex", flexDirection: "row", alignItems: "left", justifyContent: "left" }} >
+                  <PhoneIcon fontSize="small" sx={{ mr: 1 }} color="primary" />
+                  <Typography>{userSariri.user_phone}</Typography>
+                </Box>
+                <Box sx={{ display: "flex", flexDirection: "row", alignItems: "left", justifyContent: "left" }} >
+                  <EmailIcon fontSize="small" sx={{ mr: 1 }} color="primary" />
+                  <Typography>{userSariri.user_email}</Typography>
+                </Box>
+                <Divider sx={{ my: 2 }} />
+                <MenuItem sx={{ fontSize: "medium"}}>
+          <ListItemIcon>
+            <Logout fontSize="normal" color="primary"/>
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+              </Box>
+            </Menu>
+          </Box>
+          : <Box>
+            <Button sx={{ mr: 1 }} onClick={() => navigate('/sign-in')} >Login</Button>
+            <Button sx={{ mr: 1 }} onClick={() => navigate('/sign-up')} >Registrarse</Button>
+          </Box>}
       </Nav>
     </>
   );
