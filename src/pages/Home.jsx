@@ -43,6 +43,10 @@ import { GoogleContext } from "../context/googleContext";
         setCoords({ lat: latitude, lng: longitude });
       }
     );
+    const googlePrompt = document.getElementById("credential_picker_container")
+    if (googlePrompt) {
+      googlePrompt.style.display = "none";
+    }
   }, []);
 
   useEffect(() => {
@@ -147,7 +151,7 @@ import { GoogleContext } from "../context/googleContext";
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Lo sentimos, no se pudo obtener la información de los lugares."}
+          {"Lo sentimos, no se pudo obtener la informaciÃ³n de los lugares."}
         </DialogTitle>
         <DialogActions>
           <Button onClick={handleClose} autoFocus>

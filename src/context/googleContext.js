@@ -36,15 +36,6 @@ const GoogleContextProvider = (props) => {
     const [showLogin, setShowLogin] = useState(!(googleToken && saririCookie) ? true : false)
     const navigate = useNavigate();
 
-    // const handleSignOut = (event) => {
-    //     setUserGoogle({})
-    //     showButton()
-    //     setShowLogin(true)
-    // }
-
-    // const showButton = () => {
-    //     document.getElementById('signInDiv').hidden = false
-    // }
     const hideButton = () => {
         document.getElementById('signInDiv').hidden = true
     }
@@ -82,7 +73,7 @@ const GoogleContextProvider = (props) => {
 
                 const signInDiv = document.getElementById('signInDiv')
 
-                if (signInDiv) {
+                if (signInDiv && showLogin) {
                     google.accounts.id.renderButton(
                         signInDiv,
                         { theme: 'outline', size: 'large' }
@@ -102,10 +93,10 @@ const GoogleContextProvider = (props) => {
             if (scriptTag) scriptTag.remove()
         }
 
-    }, [navigate, userGoogle, userSariri])
+    }, [navigate, userGoogle, userSariri, showLogin])
 
     return (
-        <GoogleContext.Provider value={{ flag: showLogin, userGoogle, userSariri, setUserSariri }}>
+        <GoogleContext.Provider value={{ flag: showLogin, userGoogle, userSariri, setUserSariri, setUserGoogle, setShowLogin }}>
             {props.children}
             <Dialog
                 open={open}

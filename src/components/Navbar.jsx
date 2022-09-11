@@ -12,19 +12,31 @@ import EmailIcon from '@mui/icons-material/Email';
 import Divider from '@mui/material/Divider';
 import Logout from '@mui/icons-material/Logout';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import Cookies from "js-cookie";
 
 export default function Navbar() {
-  // const [navbarState, setNavbarState] = useState(false);
   const navigate = useNavigate()
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { flag, userSariri } = useContext(GoogleContext);
+  const { flag, userSariri, setUserGoogle, setUserSariri, setShowLogin } = useContext(GoogleContext);
+
+
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleSignOut = () => {
+    setAnchorEl(null);
+    setUserGoogle(null);
+    setUserSariri(null);
+    setShowLogin(true);
+    Cookies.remove('googleToken');
+    Cookies.remove('saririCookie');
+  }
+
   return (
     <>
       <Nav>
@@ -80,12 +92,12 @@ export default function Navbar() {
                   <Typography>{userSariri.user_email}</Typography>
                 </Box>
                 <Divider sx={{ my: 2 }} />
-                <MenuItem sx={{ fontSize: "medium"}}>
-          <ListItemIcon>
-            <Logout fontSize="normal" color="primary"/>
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+                <MenuItem sx={{ fontSize: "medium" }} onClick={handleSignOut}>
+                  <ListItemIcon>
+                    <Logout fontSize="normal" color="primary" />
+                  </ListItemIcon>
+                  Cerrar Sesión
+                </MenuItem>
               </Box>
             </Menu>
           </Box>
