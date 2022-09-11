@@ -1,56 +1,37 @@
-import Images from '../components/Info-Hotel/imagesList';
+import Images from './subcomponents/imagesList';
 import * as React from 'react';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import FavButton from '../components/Info-Hotel/FavButton';
-import Contacts from '../components/Info-Hotel/Contacts';
-import Reservar from '../components/Info-Hotel/Reservar';
-import Navbar from '../components/Navbar';
+import FavButton from './subcomponents/FavButton';
+import Contacts from './subcomponents/Contacts';
+import Reservar from './subcomponents/Reservar';
+import Navbar from '../Navbar';
 import Divider from '@mui/material/Divider';
-import Services from '../components/Info-Hotel/Services';
-import Mapa from '../components/Info-Hotel/Mapa';
-import Stars from '../components/Info-Hotel/Stars';
-import Comment from '../components/Info-Hotel/CommentUser';
-import Others from '../components/Info-Hotel/CommetsOthersUsers';
-import { useNavigate, useParams } from 'react-router-dom';
+import Services from './subcomponents/Services';
+import Mapa from './subcomponents/Mapa';
+import Comment from './subcomponents/CommentUser';
+import Others from './subcomponents/CommetsOthersUsers';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useEffect } from 'react';
-import { getHotelInfo, getHotelMoreInfo } from '../api';
 import { Grid } from '@mui/material';
-import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useContext } from 'react';
+import { GoogleContext } from '../../context/googleContext';
 
-export default function InfoHoteles() {
+export default function InfoHoteles({ hotelInfo, checkIn, checkOut, numGuests }) {
   const navigate = useNavigate();
-  const { hotel_id } = useParams();
-  const [hotelInfo, setHotelInfo] = useState(null);
+  const { userSariri: { user_id } } = useContext(GoogleContext);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+
 
   const handleClose = () => {
     setOpen(false);
     navigate('/home');
-    
   };
-
-  useEffect(() => {
-    getHotelInfo(hotel_id).then((response) => {
-      try {
-        console.log(response.data.data[0]);
-        setHotelInfo(response.data.data[0]);
-        getMaxPrice(response.data.data[0].price);
-      } catch (e) {
-        setOpen(true);
-      }
-    }).catch((error) => {
-      console.log(error);
-    });
-  }, [hotel_id, navigate])
 
   return (
     <>
@@ -77,7 +58,7 @@ export default function InfoHoteles() {
             marginRight: '2%'
           }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} md={5}>
+              <Grid item xs={10} md={5}>
 
                 <Typography sx={{
                   fontWeight: 'bold',
@@ -92,26 +73,20 @@ export default function InfoHoteles() {
                   padding: '1rem',
                   fontFamily: 'Roboto',
                 }
-                }>{hotelInfo.name}</Typography>
+                }>{hotelInfo.hotel_name}</Typography>
 
               </Grid>
-              <Grid item xs={10} md={5} alignSelf='self-end'>
-                <Contacts location_string={hotelInfo.location_string} phone_number={hotelInfo.phone} />
-              </Grid>
               <Grid item xs={2} md={2} alignSelf='center'>
-                <FavButton />
+                <FavButton isFavorite={hotelInfo.isFavorite} user_id={user_id} location_id={hotelInfo.location_id} />
               </Grid>
             </Grid>
 
 
           </Box>
-
-
-
         </Box>
         <Box sx={{
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
           width: '100%',
@@ -121,8 +96,42 @@ export default function InfoHoteles() {
           borderRadius: '10px',
           marginBottom: '2rem',
         }}>
-          <Images imageList={hotelInfo.photo.images ? [{ img: hotelInfo.photo.images.original.url, tittle: hotelInfo.name }] : []} />
+          <Images imageList={hotelInfo.photo_url_original ? [{ img: hotelInfo.photo_url_original, tittle: hotelInfo.hotel_name }] : []} />
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'left',
+            justifyContent: 'center',
+            marginLeft: '2rem',
+          }}>
+            <Typography sx={{
+                fontWeight: 'bold',
+                fontSize: '2rem',
+                textAlign: 'left',
+                marginLeft: '2rem',
+              }}>
+                INFORMACION
+              </Typography>
+            <Grid item xs={10} md={5}>
+              <Contacts location_string={hotelInfo.hotel_address} phone_number={hotelInfo.contact_number} />
+            </Grid>
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'left',
+            }}>
+              <Typography sx={{
+                fontWeight: 'bold',
+                fontSize: '2rem',
+                textAlign: 'left',
+                marginLeft: '2rem',
+              }}>
+                SERVICIOS
+              </Typography>
+              <Services serviceList={hotelInfo.services} />
 
+            </Box>
+          </Box>
         </Box>
         <Divider color="#000" />
         <Box
@@ -134,7 +143,7 @@ export default function InfoHoteles() {
             marginBottom: '2rem',
           }}
         >
-          <Reservar price={getMaxPrice(hotelInfo.price)} />
+          <Reservar price={getMaxPrice(hotelInfo.hotel_price)} checkIn={checkIn ?? null} checkOut={checkOut ?? null} numGuests={numGuests ?? 1} />
         </Box>
         <Divider color="#000" />
         <Box sx={{
@@ -145,27 +154,8 @@ export default function InfoHoteles() {
           height: '100%',
           padding: '2rem',
         }}>
-          <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%',
-            height: '100%',
 
-          }}>
-            <Typography sx={{
-              fontWeight: 'bold',
-              fontSize: '2rem',
-              textAlign: 'left',
-              marginLeft: '15rem',
-              marginTop: '1rem',
-              marginBottom: '1rem',
-            }}>
-              SERVICIOS
-            </Typography>
-            <Services amenitiesList={hotelInfo.amenities} />
-
-          </Box>
-          <Mapa coords={{ lat: parseFloat(hotelInfo.latitude), lng: parseFloat(hotelInfo.longitude) }} />
+          <Mapa coords={{ lat: parseFloat(hotelInfo.hotel_lat), lng: parseFloat(hotelInfo.hotel_lng) }} />
 
         </Box>
         <Divider color="#000" />
@@ -204,4 +194,11 @@ export default function InfoHoteles() {
   );
 }
 
-const getMaxPrice = (priceString) => priceString.match(/\d+/g)[1]
+const getMaxPrice = (priceString) => {
+  const prices =priceString.match(/\d+/g);
+  if(prices[1]){
+    return prices[1];
+  }else{
+    return prices[0];
+  }
+}

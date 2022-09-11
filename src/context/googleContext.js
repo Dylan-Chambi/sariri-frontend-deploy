@@ -24,43 +24,42 @@ const GoogleContextProvider = (props) => {
     const [hasAccount, setHasAccount] = useState(false)
     const navigate = useNavigate();
 
-    const handleSignOut = (event) => {
-        setUserGoogle({})
-        showButton()
-        setShowLogin(true)
-    }
+    // const handleSignOut = (event) => {
+    //     setUserGoogle({})
+    //     showButton()
+    //     setShowLogin(true)
+    // }
 
-    const showButton = () => {
-        document.getElementById('signInDiv').hidden = false
-    }
+    // const showButton = () => {
+    //     document.getElementById('signInDiv').hidden = false
+    // }
     const hideButton = () => {
         document.getElementById('signInDiv').hidden = true
     }
 
-
-    const handleCallbackResponse = async (response) => {
-        //console.log('Encoded JWT ID Token: '+ response.credential)
-        var userObject = jwt_decode(response.credential)
-        //console.log(userObject)
-        setUserGoogle(userObject)
-        await api.get('/user-exist/' + userObject.sub).then(async (response) => {
-            const userHasAccount = response.data.userExists;
-            if (userHasAccount) {
-                const userData = await api.get('/user/' + userObject.sub);
-                setUserSariri(userData.data[0])
-                navigate('/home')
-            } else {
-                navigate('/sign-up')
-            }
-            setHasAccount(userHasAccount)
-            setShowLogin(false)
-            hideButton()
-        }).catch(() => {
-            alert("Error checking in database")
-        })
-    }
-
     useEffect(() => {
+        const handleCallbackResponse = async (response) => {
+            //console.log('Encoded JWT ID Token: '+ response.credential)
+            var userObject = jwt_decode(response.credential)
+            //console.log(userObject)
+            setUserGoogle(userObject)
+            await api.get('/user-exist/' + userObject.sub).then(async (response) => {
+                const userHasAccount = response.data.userExists;
+                if (userHasAccount) {
+                    const userData = await api.get('/user/' + userObject.sub);
+                    setUserSariri(userData.data[0])
+                    navigate('/home')
+                } else {
+                    navigate('/sign-up')
+                }
+                setHasAccount(userHasAccount)
+                setShowLogin(false)
+                hideButton()
+            }).catch(() => {
+                alert("Error checking in database")
+            })
+        }
+
         const googleSrc = 'https://accounts.google.com/gsi/client'
 
         loadScript(googleSrc).then(() => {
@@ -89,7 +88,7 @@ const GoogleContextProvider = (props) => {
             const scriptTag = document.querySelector(`script[src="${googleSrc}"]`)
             if (scriptTag) scriptTag.remove()
         }
-    }, [])
+    }, [navigate])
 
     return (
         <GoogleContext.Provider value={{ flag: showLogin, userGoogle, hasAccount, userSariri, setUserSariri }}>

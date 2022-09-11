@@ -2,14 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import homeImage from "../assets/illimani.jpg";
 import { Autocomplete } from '@react-google-maps/api';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
 import Select from "../components/Principal/Select";
 import Calendar from "../components/Principal/Calendar";
 import Destination from "../components/Principal/Destination";
-import Button from "../components/Principal/Button";
-export default function Hero({onPlaceChanged, onLoad, showHotels}) {
+export default function Hero({onPlaceChanged, onLoad, showHotels, checkIn, setCheckIn, checkOut, setCheckOut, numGuests, setNumGuests}) {
 
   return (
     
@@ -33,15 +29,20 @@ export default function Hero({onPlaceChanged, onLoad, showHotels}) {
           </div>
           <div className="container">
             <label htmlFor="">Fecha</label>
-            <Calendar/>
+            <Calendar
+              checkIn={checkIn}
+              setCheckIn={setCheckIn}
+              checkOut={checkOut}
+              setCheckOut={setCheckOut}
+            />
           </div>
           <div className="container">
             <label htmlFor="">Adultos</label>
-            <Select/>
+            <Select numGuests={numGuests} setNumGuests={setNumGuests} isParent={true} />
           </div>
           <div className="container">
             <label htmlFor="">Niños</label>
-            <Select/>
+            <Select numGuests={numGuests} setNumGuests={setNumGuests} isParent={false} />
 
           </div>
           <button onClick={showHotels}>Buscar</button>

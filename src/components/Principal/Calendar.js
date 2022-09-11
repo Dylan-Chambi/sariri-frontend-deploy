@@ -5,12 +5,8 @@ import Box from '@mui/material/Box';
 import { LocalizationProvider } from '@mui/x-date-pickers-pro';
 import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { fontGrid } from '@mui/material/styles/cssUtils';
-import { responsiveFontSizes } from '@material-ui/core';
-import { sizeHeight } from '@mui/system';
 
-export default function BasicDateRangePicker() {
-  const [value, setValue] = React.useState([null, null]);
+export default function BasicDateRangePicker({ checkIn, checkOut, setCheckIn, setCheckOut }) {
 
   return (
     <LocalizationProvider
@@ -18,10 +14,10 @@ export default function BasicDateRangePicker() {
       localeText={{ start: 'Check-in', end: 'Check-out'}}
     >
       <DateRangePicker
-        value={value}
+        value={[checkIn, checkOut]}
         onChange={(newValue) => {
-          setValue(newValue);
-          console.log(newValue)
+          setCheckOut(newValue[1]);
+          setCheckIn(newValue[0]);
         }}
       disablePast
         renderInput={(startProps, endProps) => (

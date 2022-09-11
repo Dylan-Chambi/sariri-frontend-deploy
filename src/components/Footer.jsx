@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import Profile from "../pages/Profile";
-import { useNavigate } from "react-router-dom";
 export default function Footer() {
   return (
     <FooterContainer>
@@ -11,10 +10,10 @@ export default function Footer() {
           <a href="/home" >Inicio</a>
         </li>
         <li>
-          <a href="#services">Hoteles</a>
+          <a href="/favs">Favoritos</a>
         </li>
         <li>
-          <a href="#recommend">Mapa</a>
+          <a href="/map">Mapa</a>
         </li>
         <li>
           <a href="/profile" element={<Profile/>}>Perfil</a>

@@ -1,18 +1,11 @@
 import React, { useState, useEffect, createRef } from 'react';
-import { CircularProgress, Grid, Typography, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
+import { CircularProgress, Grid, Typography, MenuItem, FormControl, Select } from '@material-ui/core';
 import useStyles from './styles.js';
 import Box from '@mui/material/Box';
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import InformationButton from './InformationButton';
-import { color } from '@mui/system';
 import InputBase from '@mui/material/InputBase';
 import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   'label + &': {
@@ -46,13 +39,12 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-const List = ({ places, childClicked, isLoading, setPriceRange, priceRange }) => {
+const List = ({ places, childClicked, isLoading, setPriceRange, priceRange, setMaxPlaces, maxPlaces, checkIn, checkOut, numGuests }) => {
   const [elRefs, setElRefs] = useState([]);
   const classes = useStyles();
 
   useEffect(() => {
     setElRefs((refs) => Array(places.length).fill().map((_, i) => refs[i] || createRef()));
-    console.log(places);
   }, [places]);
   return (
     <div className={classes.container}>
@@ -66,7 +58,6 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange }) =>
 
       >
         <Typography variant="h4">Encuentra tu hotel!</Typography>
-        <Typography variant="h7">Selecciona el precio que deseas</Typography>
         {isLoading ? (
           <div className={classes.loading}>
             <CircularProgress size="5rem" color='#fff' />
@@ -75,27 +66,47 @@ const List = ({ places, childClicked, isLoading, setPriceRange, priceRange }) =>
           <>
 
             <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={4}>
-              <FormControl fullWidth>
+              <Box display="flex" alignItems="center" marginRight={4} flexDirection="column" fullWidth>
+                <Typography variant="h7">Rango de Precio</Typography>
+                <FormControl fullWidth>
+                  <Select id="demo-simple-select-label" value={priceRange} onChange={(e) => setPriceRange(e.target.value)}
+                    input={<BootstrapInput />}>
+                    <MenuItem value="Todos">Todos</MenuItem>
+                    <MenuItem value="$">$</MenuItem>
+                    <MenuItem value="$$">$$</MenuItem>
+                    <MenuItem value="$$$">$$$</MenuItem>
+                    <MenuItem value="$$$$">$$$$</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
 
-                <Select id="demo-simple-select-label" value={priceRange} onChange={(e) => setPriceRange(e.target.value)}
-                  input={<BootstrapInput />}>
-                  <MenuItem value="">Todos</MenuItem>
-                  <MenuItem value="$">$</MenuItem>
-                  <MenuItem value="$$">$$</MenuItem>
-                  <MenuItem value="$$$">$$$</MenuItem>
-                  <MenuItem value="$$$$">$$$$</MenuItem>
-                </Select>
-              </FormControl>
+              <Box display="flex" alignItems="center" flexDirection="column" fullWidth>
+                <Typography variant="h7">Limite de resultados</Typography>
+                <FormControl fullWidth>
+                  <Select id="demo-simple-select-label" value={maxPlaces} onChange={(e) => {
+                    setMaxPlaces(e.target.value)
+                  }}
+                    input={<BootstrapInput />}>
+                    <MenuItem value={10}>10</MenuItem>
+                    <MenuItem value={20}>20</MenuItem>
+                    <MenuItem value={30}>30</MenuItem>
+                    <MenuItem value={40}>40</MenuItem>
+                    <MenuItem value={50}>50</MenuItem>
+                    <MenuItem value={100}>100</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+
               <InformationButton />
 
             </Box>
             <Grid container spacing={3} className={classes.list}>
               {places?.map((place, i) => (
                 <Grid ref={elRefs[i]} key={i} item xs={12}>
-                  <PlaceDetails selected={Number(childClicked) === i} refProp={elRefs[i]} place={place} />
+                  <PlaceDetails selected={Number(childClicked) === i} refProp={elRefs[i]} place={place} checkIn={checkIn} checkOut={checkOut} numGuests={numGuests} />
                 </Grid>
               ))}
-              
+
             </Grid>
           </>
 

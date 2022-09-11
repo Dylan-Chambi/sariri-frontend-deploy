@@ -5,11 +5,16 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function SelectLabels() {
-  const [age, setAge] = React.useState('');
+export default function SelectLabels({ numGuests, setNumGuests, isParent }) {
+  const [age, setAge] = React.useState(isParent ? 1 : 0);
 
   const handleChange = (event) => {
     setAge(event.target.value);
+    if(isParent){
+      setNumGuests([event.target.value, numGuests[1]])
+    }else{
+      setNumGuests([numGuests[0], event.target.value]);
+    }
   };
 
   return (
@@ -20,9 +25,7 @@ export default function SelectLabels() {
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
         >
-          <MenuItem value="">
-            0
-          </MenuItem>
+          {!isParent && <MenuItem value={0}>0</MenuItem>}
           <MenuItem value={1}>1</MenuItem>
           <MenuItem value={2}>2</MenuItem>
           <MenuItem value={3}>3</MenuItem>
