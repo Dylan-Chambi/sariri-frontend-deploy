@@ -43,6 +43,10 @@ import { GoogleContext } from "../context/googleContext";
         setCoords({ lat: latitude, lng: longitude });
       }
     );
+    const googlePrompt = document.getElementById("credential_picker_container")
+    if (googlePrompt) {
+      googlePrompt.style.display = "none";
+    }
   }, []);
 
   useEffect(() => {
